@@ -16,14 +16,30 @@ import { Badge, Box, Button } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useBlog from '../hooks/useBlog';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 
 
 export default function BlogCard({ blog }) {
     const navigate = useNavigate()
-    const [isLiked, setIsLiked] = useState(false)
+    const { createLike ,readLike,getBlog} = useBlog()
+
+    const {userlikes} = useSelector(state=>state.blog)
+    const {userInfo} = useSelector(state=>state.auth)
+
 
     const { id, title, content, image, publish_date, author, likes, post_views, comment_count } = blog
+
+
+    useEffect(() => {
+        readLike('userlikes',id)
+    }, [])
+    
+    let isliked = userlikes.some(userLike=> userLike.post === id )
+    
+
 
 
     return (
@@ -54,9 +70,10 @@ export default function BlogCard({ blog }) {
             </CardContent>
             <CardActions disableSpacing sx={{ justifyContent: "space-between" }}>
                 <Box>
-                    <IconButton aria-label="add to favorites" onClick={()=>setIsLiked(!isLiked)}>
+                    <IconButton aria-label="add to favorites" onClick={()=>{createLike('userlikes',id)}}
+                        >
                         <Badge badgeContent={likes} color="info">
-                            <FavoriteIcon sx={{color: isLiked ? "red" : "gray"}}/>
+                            <FavoriteIcon sx={{color: isliked? "red" : "gray"}}/>
                         </Badge>
                     </IconButton>
                     <IconButton aria-label="view">

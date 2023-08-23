@@ -9,8 +9,9 @@ const Dashboard = () => {
   const { getBlog } = useBlog()
   const { loading, blogs } = useSelector(state => state.blog)
 
+
   useEffect(() => {
-    getBlog()
+    getBlog('blogs')
   }, [])
 
   if (loading) {

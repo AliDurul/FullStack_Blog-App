@@ -1,11 +1,10 @@
 import { useDispatch } from "react-redux";
 import { toastErrorNotify } from "../helper/ToastNotify";
-import axios from "axios";
+
 import {
   fetchFail,
   fetchStart,
-  getBlogSuccess,
-  getDetailSuccess,
+  getBloDetLikSuccess,
 } from "../features/blogSlice";
 import useAxios from "./useAxios";
 
@@ -15,11 +14,11 @@ const useBlog = () => {
   const {axiosWithToken,axiosPublic} = useAxios()
 
 
-  const getBlog = async () => {
+  const getBlog = async (url) => {
     dispatch(fetchStart());
     try {
       const { data } = await axiosPublic('api/blogs/');
-      dispatch(getBlogSuccess(data));
+      dispatch(getBloDetLikSuccess({url,data}));
     } catch (error) {
       dispatch(fetchFail());
       toastErrorNotify("Data can not be Fetched !");
@@ -27,26 +26,35 @@ const useBlog = () => {
     }
   };
 
-  const getBlogById = async (id) => {
+  const getBlogById = async (url,id) => {
     dispatch(fetchStart());
     try {
       const { data } = await axiosWithToken(`api/blogs/${id}/`);
-      dispatch(getDetailSuccess(data));
+      dispatch(getBloDetLikSuccess({url,data}));
     } catch (error) {
       dispatch(fetchFail());
       console.log(error);
     }
   };
 
-  const createLike = async (id) => {
+  const createLike = async (url,id) => {
     try {
-      await axios.post(`${import.meta.env.VITE_BASE_URL}api/likes/${id}/`);
+     const {data} = await axiosWithToken.post(`api/likes/${id}/`);
+     dispatch(getBloDetLikSuccess({url,data}));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const readLike = async (url,id) => {
+    try {
+     const {data} = await axiosWithToken(`api/likes/${id}/`);
+     dispatch(getBloDetLikSuccess({url,data}));
     } catch (error) {
       console.log(error);
     }
   };
 
-  return { getBlog, createLike,getBlogById };
+  return { getBlog, createLike,getBlogById,readLike };
 };
 
 export default useBlog;
