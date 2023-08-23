@@ -177,7 +177,7 @@ const Register = () => {
                                             SIGN IN
                                         </Button>
                                         <Typography variant="caption" color="initial">Already have an account? <Link
-                                            to={'/register'}
+                                            to={'/login'}
                                             style={{ textDecoration: 'none', color: "red" }}
                                         >Sign In</Link></Typography>
                                     </Box>
