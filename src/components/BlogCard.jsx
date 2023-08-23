@@ -14,23 +14,27 @@ import ShareIcon from '@mui/icons-material/Share';
 import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
 import { Badge, Box, Button } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export default function BlogCard({ blog }) {
+    const navigate = useNavigate()
+    const [isLiked, setIsLiked] = useState(false)
 
     const { id, title, content, image, publish_date, author, likes, post_views, comment_count } = blog
 
 
     return (
-        <Card sx={{ maxWidth: 400, height:500, boxShadow: 10 ,display:'flex',flexDirection:'column' , justifyContent:'space-between'}}>
-            <CardHeader
+        <Card sx={{ maxWidth: 400, height:500, boxShadow: 10 ,display:'flex',flexDirection:'column' , justifyContent:'space-between' , p:2} }>
+            <CardHeader 
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
                         A
                     </Avatar>
                 }
-                title={title}
+                title={<span style={{ fontWeight: 'bold', textTransform:'uppercase'}}>{author}</span>}
                 subheader={publish_date}
             />
             <CardMedia
@@ -40,6 +44,7 @@ export default function BlogCard({ blog }) {
                 alt={title}
                 sx={{ objectFit: "contain" }}
             />
+            <Typography variant="h5" color="initial" textAlign={'center'}>{title}</Typography>
             <CardContent>
                 <Typography variant="body2" color="text.secondary" sx={{
                     overflow: 'hidden',
@@ -49,9 +54,9 @@ export default function BlogCard({ blog }) {
             </CardContent>
             <CardActions disableSpacing sx={{ justifyContent: "space-between" }}>
                 <Box>
-                    <IconButton aria-label="add to favorites">
+                    <IconButton aria-label="add to favorites" onClick={()=>setIsLiked(!isLiked)}>
                         <Badge badgeContent={likes} color="info">
-                            <FavoriteIcon />
+                            <FavoriteIcon sx={{color: isLiked ? "red" : "gray"}}/>
                         </Badge>
                     </IconButton>
                     <IconButton aria-label="view">
@@ -71,6 +76,7 @@ export default function BlogCard({ blog }) {
 
                 <Box>
                     <Button
+                        onClick={()=> navigate(`detail/${id}`)}
                         variant="text"
                         color="primary"
                     > Read More</Button>

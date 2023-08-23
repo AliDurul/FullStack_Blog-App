@@ -9,6 +9,7 @@ import MyBlogs from "../pages/MyBlogs"
 
 import Profile from "../pages/Profile"
 import Register from "../pages/Register"
+import DetailBlog from "../pages/DetailBlog"
 
 
 const AppRouter = () => {
@@ -24,6 +25,8 @@ const AppRouter = () => {
                     <Route path="newblog" element={<NewBlog />} />
                     <Route path="myblogs" element={<MyBlogs />} />
                     <Route path="profile" element={<Profile />} />
+                    <Route path="detail/:id" element={<DetailBlog />} />
+                    
                 </Route>
                 <Route path="register" element={<Register/>}/>
 
