@@ -14,30 +14,26 @@ import ShareIcon from '@mui/icons-material/Share';
 import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
 import { Badge, Box, Button } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useBlog from '../hooks/useBlog';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 
 
 export default function BlogCard({ blog }) {
     const navigate = useNavigate()
-    const { createLike ,readLike,getBlog} = useBlog()
-
-    const {userlikes} = useSelector(state=>state.blog)
+    const { createLike } = useBlog()
     const {userInfo} = useSelector(state=>state.auth)
 
 
-    const { id, title, content, image, publish_date, author, likes, post_views, comment_count } = blog
 
 
-    useEffect(() => {
-        readLike('userlikes',id)
-    }, [])
+    const { id, title, content, image, publish_date, author, likes, likes_n, post_views, comment_count } = blog
+
+
+  
     
-    let isliked = userlikes.some(userLike=> userLike.post === id )
+    let isliked = likes_n.some(like=> like.user_id === userInfo?.id )
     
 
 
@@ -70,8 +66,7 @@ export default function BlogCard({ blog }) {
             </CardContent>
             <CardActions disableSpacing sx={{ justifyContent: "space-between" }}>
                 <Box>
-                    <IconButton aria-label="add to favorites" onClick={()=>{createLike('userlikes',id)}}
-                        >
+                    <IconButton aria-label="add to favorites" onClick={()=>{createLike('blogs',id)}}>
                         <Badge badgeContent={likes} color="info">
                             <FavoriteIcon sx={{color: isliked? "red" : "gray"}}/>
                         </Badge>

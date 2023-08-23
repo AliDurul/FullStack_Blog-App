@@ -112,7 +112,7 @@ const Register = () => {
                                             type="text"
                                             onBlur={handleBlur}
                                             error={touched.username && Boolean(errors.username)}
-                                            helperText={errors.username}
+                                            helperText={touched.username && errors.username}
                                         />
                                         <TextField
                                             id="bio"
@@ -142,7 +142,7 @@ const Register = () => {
                                             type="email"
                                             onBlur={handleBlur}
                                             error={touched.email && Boolean(errors.email)}
-                                            helperText={errors.email}
+                                            helperText={touched.email && errors.email}
 
                                         />
                                         <FormControl variant="outlined">
@@ -169,7 +169,7 @@ const Register = () => {
                                                 required
                                                 onBlur={handleBlur}
                                                 error={touched.password && Boolean(errors.password)}
-                                                helperText={errors.password}
+                                                helperText={touched.password && errors.password}
                                             />
                                         </FormControl>
 

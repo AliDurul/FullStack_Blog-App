@@ -39,22 +39,15 @@ const useBlog = () => {
 
   const createLike = async (url,id) => {
     try {
-     const {data} = await axiosWithToken.post(`api/likes/${id}/`);
-     dispatch(getBloDetLikSuccess({url,data}));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const readLike = async (url,id) => {
-    try {
-     const {data} = await axiosWithToken(`api/likes/${id}/`);
-     dispatch(getBloDetLikSuccess({url,data}));
+     await axiosWithToken.post(`api/likes/${id}/`);
+     getBlog(url)
     } catch (error) {
       console.log(error);
     }
   };
 
-  return { getBlog, createLike,getBlogById,readLike };
+
+  return { getBlog, createLike,getBlogById };
 };
 
 export default useBlog;
