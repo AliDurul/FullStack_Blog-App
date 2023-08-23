@@ -37,18 +37,15 @@ const useAuth = () => {
   }
 
   const register = async (userData) => {
-    console.log(userData);
-
     dispatch(fetchStart())
     try {
-      const data = await axios.post(`${import.meta.env.VITE_BASE_URL}users/register/`, userData);
-      console.log(data);
-      // dispatch(registerSuccess(data))
-      // toastSuccessNotify('Login Successfull !')
-      // navigate(-1)
+      const {data} = await axios.post(`${import.meta.env.VITE_BASE_URL}users/register/`, userData);
+      dispatch(registerSuccess(data))
+      toastSuccessNotify('Register Successfull !')
+      navigate('/')
     } catch (error) {
       dispatch(fetchFail())
-      toastErrorNotify('Please Register or try again !')
+      toastErrorNotify(error?.request ? error?.request?.response : error.message )
       console.log(error);
     }
   };

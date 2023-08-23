@@ -8,7 +8,30 @@ import { blue } from "@mui/material/colors";
 import { Form, Formik } from "formik";
 import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
+import { object, string } from "yup"
 
+
+export const registerSchema = object({
+    username: string()
+    .required("username zorunludur"),
+    //   .max(10, "Kullanici adi 10 karakterden az olmalidir.")
+    // first_name: string()
+    //   .max(20, "İsim 20 karakterden az olmalidir.")
+    //   .required("first_name zorunludur"),
+    // last_name: string()
+    //   .max(20, "Soyisim 30 karakterden az olmalidir.")
+    //   .required("last_name zorunludur"),
+    email: string().email().required("Email Reqiured"),
+    password: string()
+      .required("password zorunludur")
+      .min(8, "password en az 8 karakter olmalidir")
+      .matches(/\d+/, "Password bir sayi içermelidir")
+      .matches(/[a-z]/, "Password bir küçük harf içermelidir")
+      .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
+      .matches(/[!,?{}><%&$#£+-.]+/, "Password bir özel karakter içermelidir"),
+    //   .max(20, "password en fazla 20 karakter olmalidir")
+
+  })
 
 const Register = () => {
     const { register } = useAuth()
@@ -47,12 +70,13 @@ const Register = () => {
                             bio: "",
                             password: "",
                         }}
+                        validationSchema={registerSchema}
                         onSubmit={(values) => {
-                            register({...values, password2 : values.password})
+                            register({ ...values, password2: values.password })
                         }}
                     >
                         {
-                            ({ handleChange, values }) => (
+                            ({ handleChange, values ,handleBlur,touched,errors}) => (
                                 <Form>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
 
@@ -86,7 +110,9 @@ const Register = () => {
                                             onChange={handleChange}
                                             value={values.username}
                                             type="text"
-                                            required
+                                            onBlur={handleBlur}
+                                            error={touched.username && Boolean(errors.username)}
+                                            helperText={errors.username}
                                         />
                                         <TextField
                                             id="bio"
@@ -97,7 +123,7 @@ const Register = () => {
                                             value={values.bio}
                                             type="text"
                                         />
-                                            <TextField
+                                        <TextField
                                             id="image"
                                             label="Image"
                                             variant="outlined"
@@ -114,7 +140,9 @@ const Register = () => {
                                             onChange={handleChange}
                                             value={values.email}
                                             type="email"
-                                            required
+                                            onBlur={handleBlur}
+                                            error={touched.email && Boolean(errors.email)}
+                                            helperText={errors.email}
 
                                         />
                                         <FormControl variant="outlined">
@@ -138,11 +166,13 @@ const Register = () => {
                                                 name="password"
                                                 onChange={handleChange}
                                                 value={values.password}
-                                            required
-
+                                                required
+                                                onBlur={handleBlur}
+                                                error={touched.password && Boolean(errors.password)}
+                                                helperText={errors.password}
                                             />
                                         </FormControl>
-                                  
+
                                         <Button variant='contained' color="primary" type="submit">
                                             SIGN IN
                                         </Button>
