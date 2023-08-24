@@ -10,7 +10,7 @@ import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
-import { Badge, Box, Button } from '@mui/material';
+import { Badge, Box, Button, Stack } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useNavigate } from 'react-router-dom';
 import useBlog from '../hooks/useBlog';
@@ -19,14 +19,15 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import CommentBox from '../components/CommentBox';
 import { useState } from 'react';
+import { Height } from '@mui/icons-material';
 
 
 
 export default function DetailBlog() {
     const { id } = useParams()
     const navigate = useNavigate()
-    const { blogDetail } = useSelector(state => state.blog)
-    const {userInfo} = useSelector(state=>state.auth)
+    const { blogDetail, } = useSelector(state => state.blog)
+    const { userInfo } = useSelector(state => state.auth)
     const { getBlogById, createLike } = useBlog()
     const [isCliked, setIsCliked] = useState(false)
 
@@ -34,15 +35,13 @@ export default function DetailBlog() {
         getBlogById('blogDetail', id)
     }, [])
 
-    const { title, content, image, publish_date, author, likes, likes_n, post_views, comment_count,comments } = blogDetail
 
-    let isliked = likes_n.some(like=> like.user_id === userInfo?.id )
-
+    let isliked = blogDetail?.likes_n?.some(like => like?.user_id === userInfo?.id)
+    let isAuthor = blogDetail?.author === userInfo?.username
     return (
         <>
             <Box sx={{ display: 'flex', p: 10, pb: 0 }} >
-                <CardContent sx={{ display: 'flex', justifyContent: "space-between", flexDirection: "column" }} >
-
+                <CardContent sx={{ display: 'flex', flexGrow: 1, justifyContent: "space-between", flexDirection: "column" }} >
                     <Box>
                         <CardHeader
                             sx={{ mb: 5, p: 0 }}
@@ -51,13 +50,13 @@ export default function DetailBlog() {
                                     A
                                 </Avatar>
                             }
-                            title={<span style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>{author}</span>}
-                            subheader={publish_date}
+                            title={<span style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>{blogDetail?.author}</span>}
+                            subheader={blogDetail?.publish_date}
                         />
 
                         <Box sx={{ p: 2, mb: 4 }}>
-                            <Typography variant="h4" color="initial">{title}</Typography>
-                            <Typography variant="body1" color="text.secondary">{content}</Typography>
+                            <Typography variant="h4" color="initial">{blogDetail?.title}</Typography>
+                            <Typography variant="body1" color="text.secondary">{blogDetail?.content}</Typography>
                         </Box>
                     </Box>
 
@@ -65,17 +64,17 @@ export default function DetailBlog() {
                     <CardActions disableSpacing sx={{ justifyContent: "space-between" }}>
                         <Box>
                             <IconButton aria-label="add to favorites" onClick={() => createLike('blogs', id)}>
-                                <Badge badgeContent={likes} color="info">
+                                <Badge badgeContent={blogDetail?.likes} color="info">
                                     <FavoriteIcon sx={{ color: isliked ? "red" : "gray" }} />
                                 </Badge>
                             </IconButton>
                             <IconButton aria-label="view">
-                                <Badge badgeContent={post_views} color="info" >
+                                <Badge badgeContent={blogDetail?.post_views} color="info" >
                                     <VisibilityOutlinedIcon />
                                 </Badge>
                             </IconButton>
                             <IconButton aria-label="view" onClick={() => setIsCliked(!isCliked)}>
-                                <Badge badgeContent={comment_count} color="info">
+                                <Badge badgeContent={blogDetail?.comment_count} color="info">
                                     <RateReviewOutlinedIcon />
                                 </Badge>
                             </IconButton>
@@ -84,36 +83,46 @@ export default function DetailBlog() {
                             </IconButton>
                         </Box>
 
-                        <Box>
+                        <Box sx={{ display: 'flex', gap: 1 }}>
+                            {
+                                isAuthor &&
+                                <Stack direction="row" spacing={2}>
+                                    <Button variant="contained" color="success">
+                                        Success
+                                    </Button>
+                                    <Button variant="outlined" color="error">
+                                        Delete
+                                    </Button>
+                                </Stack>
+                            }
                             <Button
                                 onClick={() => navigate(-1)}
-                                variant="text"
+                                variant="contained"
                                 color="primary"
                             > Explore More</Button>
                         </Box>
                     </CardActions>
                 </CardContent>
-                <CardMedia
-                    component="img"
-                    height="500"
-                    image={image}
-                    alt={title}
-                    sx={{ objectFit: "contain", width: "auto" }}
-                />
-
-
-
+            
+                    <CardMedia
+                        component="img"
+                        image={blogDetail?.image}
+                        alt={blogDetail?.title}
+                        sx={{ objectFit: "contain", width:'600px' , height:"auto",flexGrow: 1 }}
+                    />
             </Box>
+
+
 
             {isCliked &&
                 <Box sx={{ display: 'flex', flexDirection: 'column', width: "50%", mb: 5, gap: 4, p: 10, pt: 5 }}>
                     {
-                        comments.map(comment => 
-                        <Box key={comment.id} sx={{ width: "300px", borderBottom: "1px solid black", p: 2, display: 'flex', flexDirection: 'column', gap: 3 }}>
-                            <Typography variant="body1" color="initial">{comment.user}</Typography>
-                            <Typography variant="body2" color="initial">{comment.time_stamp}</Typography>
-                            <Typography variant="body1" color="initial">{comment.content}</Typography>
-                        </Box>)
+                        blogDetail?.comments?.map(comment =>
+                            <Box key={comment.id} sx={{ width: "300px", borderBottom: "1px solid black", p: 2, display: 'flex', flexDirection: 'column', gap: 3 }}>
+                                <Typography variant="body1" color="initial">{comment.user}</Typography>
+                                <Typography variant="body2" color="initial">{comment.time_stamp}</Typography>
+                                <Typography variant="body1" color="initial">{comment.content}</Typography>
+                            </Box>)
                     }
                     <CommentBox id={blogDetail.id} />
 
