@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material"
+import { Avatar, Box, Card, CardContent, CardMedia, Typography } from "@mui/material"
 import { useSelector } from "react-redux"
 import PersonIcon from '@mui/icons-material/Person';
 
