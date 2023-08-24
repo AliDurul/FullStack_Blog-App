@@ -68,7 +68,7 @@ export default function BlogCard({ blog }) {
                 <Box>
                     <IconButton aria-label="add to favorites" onClick={()=>{createLike('blogs',id)}}>
                         <Badge badgeContent={likes} color="info">
-                            <FavoriteIcon sx={{color: isliked? "red" : "gray"}}/>
+                            <FavoriteIcon sx={{color: isliked ? "red" : "gray"}}/>
                         </Badge>
                     </IconButton>
                     <IconButton aria-label="view">
