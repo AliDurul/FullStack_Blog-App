@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Visibility } from "@mui/icons-material";
 import { VisibilityOff } from "@mui/icons-material";
-import { Avatar, Box, Button, Container, FormControl, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, Typography } from "@mui/material"
+import { Avatar, Box, Button, Container, FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, Typography } from "@mui/material"
 import { useState } from "react";
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { blue } from "@mui/material/colors";
@@ -13,7 +13,7 @@ import { object, string } from "yup"
 
 export const registerSchema = object({
     username: string()
-    .required("username zorunludur"),
+        .required("username zorunludur"),
     //   .max(10, "Kullanici adi 10 karakterden az olmalidir.")
     // first_name: string()
     //   .max(20, "İsim 20 karakterden az olmalidir.")
@@ -23,15 +23,15 @@ export const registerSchema = object({
     //   .required("last_name zorunludur"),
     email: string().email().required("Email Reqiured"),
     password: string()
-      .required("password zorunludur")
-      .min(8, "password en az 8 karakter olmalidir")
-      .matches(/\d+/, "Password bir sayi içermelidir")
-      .matches(/[a-z]/, "Password bir küçük harf içermelidir")
-      .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
-      .matches(/[!,?{}><%&$#£+-.]+/, "Password bir özel karakter içermelidir"),
+        .required("password zorunludur")
+        .min(8, "password en az 8 karakter olmalidir")
+        .matches(/\d+/, "Password bir sayi içermelidir")
+        .matches(/[a-z]/, "Password bir küçük harf içermelidir")
+        .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
+        .matches(/[!,?{}><%&$#£+-.]+/, "Password bir özel karakter içermelidir"),
     //   .max(20, "password en fazla 20 karakter olmalidir")
 
-  })
+})
 
 const Register = () => {
     const { register } = useAuth()
@@ -76,7 +76,7 @@ const Register = () => {
                         }}
                     >
                         {
-                            ({ handleChange, values ,handleBlur,touched,errors}) => (
+                            ({ handleChange, values, handleBlur, touched, errors }) => (
                                 <Form>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
 
@@ -168,9 +168,15 @@ const Register = () => {
                                                 value={values.password}
                                                 required
                                                 onBlur={handleBlur}
-                                                error={touched.password && Boolean(errors.password)}
-                                                helperText={touched.password && errors.password}
+                                             
+
                                             />
+
+                                            {touched.password && Boolean(errors.password) && (
+                                                <FormHelperText error id="accountId-error">
+                                                    {touched.password && errors.password}
+                                                </FormHelperText>
+                                            )}
                                         </FormControl>
 
                                         <Button variant='contained' color="primary" type="submit">

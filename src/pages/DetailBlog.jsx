@@ -10,7 +10,7 @@ import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
-import { Badge, Box, Button, Stack } from '@mui/material';
+import { Badge, Box, Button, Chip, Stack } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useNavigate } from 'react-router-dom';
 import useBlog from '../hooks/useBlog';
@@ -46,7 +46,7 @@ export default function DetailBlog() {
     let isAuthor = blogDetail?.author === userInfo?.username
     return (
         <>
-            <Box sx={{ display: 'flex', p: 10, pb: 0, flexDirection: {xs: 'column', md:"row" } }} >
+            <Box sx={{ display: 'flex', p: 10, pb: 0, flexDirection: { xs: 'column', md: "row" } }} >
                 <CardContent sx={{ display: 'flex', flexGrow: 1, justifyContent: "space-between", flexDirection: "column" }} >
                     <Box>
                         <CardHeader
@@ -62,7 +62,11 @@ export default function DetailBlog() {
 
                         <Box sx={{ p: 2, mb: 4 }}>
                             <Typography variant="h4" color="initial">{blogDetail?.title}</Typography>
-                            <Typography variant="body1" color="text.secondary">{blogDetail?.content}</Typography>
+                            <Typography variant="body1" color="text.secondary" mb={3}>{blogDetail?.content}</Typography>
+
+
+                            <Chip variant="outlined" color="primary" size="small" label={"# " + blogDetail?.category_name} />
+
                         </Box>
                     </Box>
 
@@ -89,14 +93,14 @@ export default function DetailBlog() {
                             </IconButton>
                         </Box>
 
-                        <Box sx={{ display: 'flex', gap: 1, flexDirection: {xs: 'column', md:"row"} }}>
+                        <Box sx={{ display: 'flex', gap: 1, flexDirection: { xs: 'column', md: "row" } }}>
                             {
                                 isAuthor &&
-                                <Stack spacing={2} direction={{ md: 'column', lg: 'row' }}  useFlexGap flexWrap="wrap">
-                                    <Button variant="contained" color="success" onClick={()=>{handleOpen(),setIsUpdate(true)}}>
+                                <Stack spacing={2} direction={{ md: 'column', lg: 'row' }} useFlexGap flexWrap="wrap">
+                                    <Button variant="contained" color="success" onClick={() => { handleOpen(), setIsUpdate(true) }}>
                                         Update
                                     </Button>
-                                    <Button variant="outlined" color="error" onClick={()=>{handleOpen(),setIsUpdate(false)}}>
+                                    <Button variant="outlined" color="error" onClick={() => { handleOpen(), setIsUpdate(false) }}>
                                         Delete
                                     </Button>
                                 </Stack>
@@ -114,7 +118,7 @@ export default function DetailBlog() {
                     component="img"
                     image={blogDetail?.image}
                     alt={blogDetail?.title}
-                    sx={{ objectFit: "contain", width: '100%', maxWidth:'700px', height: "auto", flexGrow: 1 }}
+                    sx={{ objectFit: "contain", width: '100%', maxWidth: '700px', height: "auto", flexGrow: 1 }}
                 />
             </Box>
 
