@@ -7,9 +7,11 @@ import {
   getBloDetLikSuccess,
 } from "../features/blogSlice";
 import useAxios from "./useAxios";
+import { useNavigate } from "react-router-dom";
 
 const useBlog = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const { axiosWithToken, axiosPublic } = useAxios();
 
@@ -66,13 +68,13 @@ const useBlog = () => {
   const createBlog = async (newBlog) => {
     try {
       await axiosWithToken.post("api/blogs/", newBlog);
-      toastSuccessNotify('Successfull !')
+      toastSuccessNotify("Successfull !");
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getUserBlog = async (url,userId) => {
+  const getUserBlog = async (url, userId) => {
     dispatch(fetchStart());
     try {
       const { data } = await axiosWithToken(`api/blogs/?author=${userId}`);
@@ -84,9 +86,38 @@ const useBlog = () => {
     }
   };
 
+  const updateBlog = async (updatedBlog, id) => {
+    try {
+      await axiosWithToken.put(`api/blogs/${id}/`, updatedBlog);
+      getBlogById('blogDetail',id)
+      toastSuccessNotify("Updated is Secuccessful !");
+    } catch (error) {
+      toastErrorNotify("It Could not Updated !")
+      console.log(error);
+    }
+  };
 
-
-  return { getBlog, createLike, getBlogById, createComment,getCategories,createBlog ,getUserBlog};
+  const deleteBlog = async (id) => {
+    try {
+      await axiosWithToken.delete(`api/blogs/${id}/`);
+      toastSuccessNotify("Deleted is Secuccessful !");
+      navigate('/')
+    } catch (error) {
+      toastErrorNotify("It Could not Deleted !")
+      console.log(error);
+    }
+  };
+  return {
+    getBlog,
+    createLike,
+    getBlogById,
+    createComment,
+    getCategories,
+    createBlog,
+    getUserBlog,
+    updateBlog,
+    deleteBlog
+  };
 };
 
 export default useBlog;

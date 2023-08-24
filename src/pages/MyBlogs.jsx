@@ -81,6 +81,7 @@ const MyBlogs = () => {
 
                   <Box>
                     <Button
+                    onClick={()=>navigate(`/detail/${blog.id}`)}
                       variant="text"
                       color="primary"
                     > Read More</Button>

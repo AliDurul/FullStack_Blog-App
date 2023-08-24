@@ -19,7 +19,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import CommentBox from '../components/CommentBox';
 import { useState } from 'react';
-import { Height } from '@mui/icons-material';
+import BlogUpdate from '../components/BlogUpdate';
 
 
 
@@ -28,11 +28,17 @@ export default function DetailBlog() {
     const navigate = useNavigate()
     const { blogDetail, } = useSelector(state => state.blog)
     const { userInfo } = useSelector(state => state.auth)
-    const { getBlogById, createLike } = useBlog()
+    const { getBlogById, createLike, getCategories } = useBlog()
     const [isCliked, setIsCliked] = useState(false)
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const [isUpdate, setIsUpdate] = useState(null)
+
+
 
     useEffect(() => {
         getBlogById('blogDetail', id)
+        getCategories('categories')
     }, [])
 
 
@@ -40,7 +46,7 @@ export default function DetailBlog() {
     let isAuthor = blogDetail?.author === userInfo?.username
     return (
         <>
-            <Box sx={{ display: 'flex', p: 10, pb: 0 }} >
+            <Box sx={{ display: 'flex', p: 10, pb: 0, flexDirection: {xs: 'column', md:"row" } }} >
                 <CardContent sx={{ display: 'flex', flexGrow: 1, justifyContent: "space-between", flexDirection: "column" }} >
                     <Box>
                         <CardHeader
@@ -83,38 +89,37 @@ export default function DetailBlog() {
                             </IconButton>
                         </Box>
 
-                        <Box sx={{ display: 'flex', gap: 1 }}>
+                        <Box sx={{ display: 'flex', gap: 1, flexDirection: {xs: 'column', md:"row"} }}>
                             {
                                 isAuthor &&
-                                <Stack direction="row" spacing={2}>
-                                    <Button variant="contained" color="success">
-                                        Success
+                                <Stack spacing={2} direction={{ md: 'column', lg: 'row' }}  useFlexGap flexWrap="wrap">
+                                    <Button variant="contained" color="success" onClick={()=>{handleOpen(),setIsUpdate(true)}}>
+                                        Update
                                     </Button>
-                                    <Button variant="outlined" color="error">
+                                    <Button variant="outlined" color="error" onClick={()=>{handleOpen(),setIsUpdate(false)}}>
                                         Delete
                                     </Button>
                                 </Stack>
                             }
                             <Button
-                                onClick={() => navigate(-1)}
+                                onClick={() => navigate("/")}
                                 variant="contained"
                                 color="primary"
                             > Explore More</Button>
                         </Box>
                     </CardActions>
                 </CardContent>
-            
-                    <CardMedia
-                        component="img"
-                        image={blogDetail?.image}
-                        alt={blogDetail?.title}
-                        sx={{ objectFit: "contain", width:'600px' , height:"auto",flexGrow: 1 }}
-                    />
+
+                <CardMedia
+                    component="img"
+                    image={blogDetail?.image}
+                    alt={blogDetail?.title}
+                    sx={{ objectFit: "contain", width: '100%', maxWidth:'700px', height: "auto", flexGrow: 1 }}
+                />
             </Box>
 
-
-
-            {isCliked &&
+            {
+                isCliked &&
                 <Box sx={{ display: 'flex', flexDirection: 'column', width: "50%", mb: 5, gap: 4, p: 10, pt: 5 }}>
                     {
                         blogDetail?.comments?.map(comment =>
@@ -125,8 +130,10 @@ export default function DetailBlog() {
                             </Box>)
                     }
                     <CommentBox id={blogDetail.id} />
+                </Box>
+            }
 
-                </Box>}
+            <BlogUpdate open={open} setOpen={setOpen} blogDetail={blogDetail} isUpdate={isUpdate} />
         </>
 
     );
