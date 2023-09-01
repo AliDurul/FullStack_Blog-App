@@ -68,7 +68,7 @@ Thank you for visiting my project. I hope you have a wonderful experience explor
 ## Project Skeleton
 
 ```
-Blog App Folder
+Blog App (Folder)
 |
 |-- public
 |   |-- Lee.jpg
