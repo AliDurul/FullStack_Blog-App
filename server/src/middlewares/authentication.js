@@ -1,16 +1,15 @@
 
+const Token = require('../models/token')
 
-
-module.exports = (req,res,next) => {
+module.exports = async (req,res,next) => {
   
-/*     const auth = req.headers?.authorization || null 
-    const token = auth ? auth.split(' ') : null */
+    const auth = req.headers?.authorization || null 
+    const token = auth ? auth.split(' ')[1] : null
 
+    if(token){
+        const tokenData = await Token.findOne({token}).populate('user_id')
+        req.user = tokenData.user_id
+    }
 
-    
-
-
-    
-console.log('ali');
     next()
 }

@@ -36,6 +36,8 @@ module.exports = {
 
   logout: async (req,res) => {
 
+    console.log(req.user);
+    
     const auth = req?.headers?.authorization || null
 
     const  token = auth ? auth.split(' ')[1] : null

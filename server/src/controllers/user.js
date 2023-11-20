@@ -22,7 +22,8 @@ module.exports = {
     const user = await User.create(req.body);
     
     const id = user._id
-   
+    
+    // register
      const tokenData = await Token.create({user_id: user._id,token: passwordEncrypt(user._id + Date.now())});
 
     const {token} = tokenData
