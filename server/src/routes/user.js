@@ -19,7 +19,7 @@ router
   .delete(user.delete);
 
 // auth routes
-router.route("/auth").post(auth.login);
+router.route("/auth/login").post(auth.login);
 
 /* ------------------------------------------------------- */
 module.exports = router;
