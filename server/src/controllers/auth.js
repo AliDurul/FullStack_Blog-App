@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Token = require("../models/token");
 
 const passwordEncrypt = require("../helpers/passwordEncrypt");
 
@@ -16,21 +17,19 @@ module.exports = {
       password: passwordEncrypt(password),
     });
 
-
     if (!user) {
       res.errorStatusCode = 401;
       throw new Error("Wrong username/email or password.");
     }
 
-    
+    let tokenData = await Token.findOne({ user_id: user._id });
+   
+    if(!tokenData) tokenData = await Token.create({user_id:user._id, token: passwordEncrypt( user._id + Date.now()) })
 
-
-
-
-    console.log(user);
 
     res.send({
-      msg: "login",
+      key: tokenData.token,
+      user
     });
   },
 };
