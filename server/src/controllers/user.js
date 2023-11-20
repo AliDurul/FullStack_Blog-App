@@ -37,7 +37,7 @@ module.exports = {
     });
   },
   delete: async (req, res) => {
-    const data = await TOken.delete({ _id: req.params.id });
+    const data = await User.delete({ _id: req.params.id})
     res.status(data.deletedCount ? 204 : 404).send({
       error: !data.deletedCount,
       data,
