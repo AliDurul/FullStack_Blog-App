@@ -20,15 +20,15 @@ module.exports = {
 
     const user = await User.create(req.body);
     
-    
+    const id = user._id
    
      const tokenData = await Token.create({user_id: user._id,token: passwordEncrypt(user._id + Date.now())});
 
     const {token} = tokenData
 
-    const userInfo = {...user, token}
+    // const userInfo = {...user, token}
 
-    res.status(201).send(userInfo);
+    res.status(201).send({...user._doc,token, id });
   },
   read: async (req, res) => {
     const data = await User.findOne({ _id: req.params.id });
