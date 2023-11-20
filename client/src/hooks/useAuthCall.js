@@ -15,6 +15,7 @@ const useAuthCall = () => {
 
     try {
       const { data } = await axios.post(`${import.meta.env.VITE_BASE_URL}` + "users/auth/login/",userData);
+      console.log(data);
       dispatch(loginSuccess(data));
       dispatch(modal(false))
       navigate(-1)
