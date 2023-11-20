@@ -1,7 +1,4 @@
 const router = require('express').Router()
-
-// user
+//users
 router.use('/users', require('./user'))
-
-
 module.exports = router

@@ -1,11 +1,11 @@
 "use strict"
 /* -------------------------------------------------------
-    USERS BLOGG APP
+    USERS BLOG APP
 ------------------------------------------------------- */
 /* ------------------------------------------------------- *
 {
     "username": "admin",
-    "password": "aA*123456",
+    "password": "aA?123456",
     "email": "admin@site.com",
     "first_name": "admin",
     "last_name": "admin",
@@ -15,9 +15,8 @@
 }
 /* ------------------------------------------------------- */
 const { Schema, model } = require('mongoose')
-const {isEmail} = require("validator");
+const { isEmail } = require('validator') // for Validate process : npm i validator
 const passwordEncrypt = require('../helpers/passwordEncrypt')
-
 // User Model:
 const UserSchema = new Schema({
     username: {
@@ -27,19 +26,18 @@ const UserSchema = new Schema({
         unique: true,
         index: true
     },
-    
     email: {
         type: String,
         trim: true,
         required: true,
         unique: true,
-        validate: [isEmail, "Email type is not correct."],
-        index: true
+        index: true,
+        validate: [isEmail, "Email type is not correct"]
     },
     password: {
         type: String,
         trim: true,
-        required: true 
+        required: true
     },
     first_name: {
         type: String,
@@ -65,31 +63,22 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     },
-​
 },{ collection: 'users', timestamps: true })
 /* ------------------------------------------------------- */
 // Schema Configs:
-
 UserSchema.pre('save', function(next){
-
     if(this.password){
-            // pass == (min 1: lowerCase, upperCase, Numeric, @$!%*?& + min 8 chars)
-        const isPasswordValidated = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&+.,]).{8,}$/.test(this.password)
-
+        const isPasswordValidated = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&+.,])[A-Za-z\d@$!%*?&+.,].{8,}$/.test(data.password)
         if(isPasswordValidated){
             this.password = passwordEncrypt(this.password)
         }else{
-            next(new Error('Password not validated.'))
+            next(new Error("Password not validated."))
         }
-
         next()
     }
-
 })
-
 UserSchema.pre('init', function (data) {
     data.id = data._id
 })
-
-
-module.exports = model('User',UserSchema )
+/* ------------------------------------------------------- */
+module.exports = model('User', UserSchema)
