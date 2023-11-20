@@ -34,6 +34,24 @@ module.exports = {
   },
 
 
+  logout: async (req,res) => {
+
+    const auth = req?.headers?.authorization || null
+
+    const  token = auth ? auth.split(' ')[1] : null
+
+
+    if(token) await Token.deleteOne({token})
+      
+    
+
+    res.send({
+      error:false,
+      message: 'User loged out'
+    })
+
+  }
+
 
 
 };

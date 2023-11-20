@@ -16,6 +16,7 @@ module.exports = {
       data,
     });
   },
+  
   create: async (req, res) => {
 
     const user = await User.create(req.body);
@@ -25,8 +26,6 @@ module.exports = {
      const tokenData = await Token.create({user_id: user._id,token: passwordEncrypt(user._id + Date.now())});
 
     const {token} = tokenData
-
-    // const userInfo = {...user, token}
 
     res.status(201).send({...user._doc,token, id });
   },

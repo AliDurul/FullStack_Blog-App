@@ -25,6 +25,7 @@ router
 
 // auth routes
 router.route("/auth/login").post(auth.login);
+router.route("/auth/logout").post(auth.logout);
 
 /* ------------------------------------------------------- */
 module.exports = router;

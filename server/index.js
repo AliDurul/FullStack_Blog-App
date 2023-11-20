@@ -22,9 +22,9 @@ app.all("/", (req, res) => {
 });
 /* ------------------------------------------------------------------------- */
 // MIDDLEWARES:
-// Accept JSON:
 app.use(express.json());
 app.use(require("./src/middlewares/findSearchSortPage"));
+app.use(require('./src/middlewares/authentication'))
 /* ------------------------------------------------------------------------- */
 // ROUTES:
 app.use(require("./src/routes"));
