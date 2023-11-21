@@ -10,7 +10,7 @@ module.exports = {
         const data = await res.getModelList(Blog)
         res.status(200).send({
             error: false,
-            // details: await res.getModelListDetails(Blog),
+            details: await res.getModelListDetails(Blog),
             data
         })
     },
