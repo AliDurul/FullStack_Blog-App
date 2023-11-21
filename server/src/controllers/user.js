@@ -29,9 +29,9 @@ module.exports = {
 
     const {token} = tokenData
 
+    // spread operator used
     res.status(201).send({...user._doc,token, id });
 */
-
 
     const user = await User.create(req.body);
 

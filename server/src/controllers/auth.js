@@ -36,7 +36,6 @@ module.exports = {
 
   logout: async (req,res) => {
 
-    console.log(req.user);
     
     const auth = req?.headers?.authorization || null
 
@@ -46,7 +45,6 @@ module.exports = {
     if(token) await Token.deleteOne({token})
       
     
-
     res.send({
       error:false,
       message: 'User loged out'
