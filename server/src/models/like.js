@@ -15,7 +15,7 @@ const LikeSchema = new Schema(
             ref: "User",
             required: true,
         },
-        post: {
+        post_id: {
             type: Schema.Types.ObjectId,
             ref: "Blog",
             required: true,

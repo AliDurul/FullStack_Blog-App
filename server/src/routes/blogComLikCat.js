@@ -8,6 +8,8 @@ const router = require("express").Router();
 
 const category = require("../controllers/category")
 const blog = require("../controllers/blog")
+const like = require("../controllers/like")
+
 
 
 // category routes
@@ -45,15 +47,12 @@ router
   .delete(blog.delete);
 
 // likes  routes
-router.route("/likes")
-  .get(category.list).post(category.create);
 
-router
-  .route("/likes/:id")
-  .get(category.read)
-  .put(category.update)
-  .patch(category.update)
-  .delete(category.delete);
+
+router.route("/likes/:id").get(like.create)
+ 
+ 
+ 
 
 
 /* ------------------------------------------------------- */
