@@ -49,7 +49,7 @@ router
 // likes  routes
 
 
-router.route("/likes/:id").get(like.create)
+router.route("/likes/:id").post(like.create)
  
  
  
