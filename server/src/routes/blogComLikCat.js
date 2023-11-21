@@ -9,6 +9,7 @@ const router = require("express").Router();
 const category = require("../controllers/category")
 const blog = require("../controllers/blog")
 const like = require("../controllers/like")
+const comment = require("../controllers/comment")
 
 
 
@@ -25,14 +26,9 @@ router
 
 
 // comment routes
-router.route("/comments")
-  .get(category.list).post(category.create);
-
-router
-  .route("/comments/:id")
-  .get(category.read)
+router.route("/comments/:id")
+  .post(comment.create)
   .put(category.update)
-  .patch(category.update)
   .delete(category.delete);
 
 // blog  routes
@@ -47,8 +43,6 @@ router
   .delete(blog.delete);
 
 // likes  routes
-
-
 router.route("/likes/:id").post(like.create)
  
  
