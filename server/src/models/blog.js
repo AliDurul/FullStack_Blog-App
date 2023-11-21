@@ -8,6 +8,7 @@ const { Schema, model } = require("mongoose");
 /* ------------------------------------------------------- */
 // Blog Model:
 
+const Category = require("./category");
 
 const BlogSchema = new Schema(
   {
@@ -45,10 +46,6 @@ const BlogSchema = new Schema(
     category_name: {
       type: String,
       trim: true,
-      default: async function () {
-        const categories = await Category.findOne(this.category);
-        return categories.name;
-      },
     },
     post_views: {
       type: Number,
@@ -59,17 +56,27 @@ const BlogSchema = new Schema(
       default: 0,
     },
     likes_n: {
-        type: Array,
-        default: []
+      type: Array,
+      default: [],
     },
     likes: {
-        type: Number,
-        default: 0 ,
-        transform: function(){this.likes_n.lenght}
-      },
+      type: Number,
+      default: 0
+    },
   },
   { collection: "blogs", timestamps: true }
 );
+
+BlogSchema.pre("save", async function (next) {
+  // category alanına bağlı kategori bilgisini al
+  const category = await Category.findOne(this.category);
+
+  // category_name'i belirle
+  this.category_name = category ? category.name : "Default Category";
+
+  // sonraki adıma geç
+  next();
+});
 
 /* ------------------------------------------------------- */
 module.exports = model("Blog", BlogSchema);
