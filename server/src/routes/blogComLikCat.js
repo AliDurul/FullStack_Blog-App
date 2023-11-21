@@ -28,8 +28,8 @@ router
 // comment routes
 router.route("/comments/:id")
   .post(comment.create)
-  .put(category.update)
-  .delete(category.delete);
+  .put(comment.update)
+  .delete(comment.delete);
 
 // blog  routes
 router.route("/blogs")
