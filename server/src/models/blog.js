@@ -72,7 +72,7 @@ const BlogSchema = new Schema(
     },
     likes: {
       type: Number,
-      default: 0
+      default: function () { return this.likes_n.length  }, 
     },
   },
   { collection: "blogs", timestamps: true }
