@@ -8,6 +8,17 @@ const { Schema, model } = require("mongoose");
 /* ------------------------------------------------------- */
 // Blog Model:
 
+/* 
+{
+  "title": "title 2",
+  "content": "content 2",
+  "image": "image 2",
+  "category": "655c6d7f0a6fe58b8a9dcc5f",
+  "author": "655b56275a51b6c4beaaa772",
+  "status": "p"
+}
+*/
+
 const Category = require("./category");
 
 const BlogSchema = new Schema(
