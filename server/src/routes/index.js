@@ -4,7 +4,7 @@ const router = require("express").Router();
 router.use("/users", require("./user"));
 
 // categories
-router.use("/api", require('./blogComLikCa'))
+router.use("/api", require('./blogComLikCat'))
 
 
 
