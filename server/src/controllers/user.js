@@ -5,7 +5,7 @@
 // User Controller:
 const User = require("../models/user");
 const Token = require("../models/token");
-const passwordEncrypt = require('../helpers/passwordEncrypt')
+const passwordEncrypt = require("../helpers/passwordEncrypt");
 
 module.exports = {
   list: async (req, res) => {
@@ -16,10 +16,11 @@ module.exports = {
       data,
     });
   },
-  
+
   create: async (req, res) => {
 
-    const user = await User.create(req.body);
+/* 
+  const user = await User.create(req.body);
     
     const id = user._id
     
@@ -29,6 +30,21 @@ module.exports = {
     const {token} = tokenData
 
     res.status(201).send({...user._doc,token, id });
+*/
+
+
+    const user = await User.create(req.body);
+
+    // rest operoter
+    const { _id, ...userInfo } = user._doc;
+
+    // register
+    const tokenData = await Token.create({user_id: _id,token: passwordEncrypt(_id + Date.now()),});
+
+    userInfo.id = _id
+    userInfo.token = tokenData.token
+
+    res.status(201).send(userInfo);
   },
   read: async (req, res) => {
     const data = await User.findOne({ _id: req.params.id });
