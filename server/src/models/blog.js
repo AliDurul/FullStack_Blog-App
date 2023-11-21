@@ -42,8 +42,7 @@ const BlogSchema = new Schema(
       required: true,
     },
     author: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
       required: true,
     },
     status: {
@@ -51,9 +50,6 @@ const BlogSchema = new Schema(
       enum: ["p", "d"],
       default: "d",
     },
-
-    comments: [],
-
     category_name: {
       type: String,
       trim: true,
@@ -62,9 +58,15 @@ const BlogSchema = new Schema(
       type: Number,
       default: 0,
     },
+    comments: [],
     comment_count: {
       type: Number,
-      default: 0,
+      default: function () {
+        return this.comments.length;
+      },
+      transform: function () {
+        return this.comments.length;
+      },
     },
     likes_n: {
       type: Array,
@@ -72,7 +74,12 @@ const BlogSchema = new Schema(
     },
     likes: {
       type: Number,
-      default: function () { return this.likes_n.length  }, 
+      default: function () {
+        return this.likes_n.length;
+      },
+      transform: function () {
+        return this.likes_n.length;
+      },
     },
   },
   { collection: "blogs", timestamps: true }
