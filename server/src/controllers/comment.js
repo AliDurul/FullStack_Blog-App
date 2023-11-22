@@ -17,24 +17,42 @@ module.exports = {
 
     await Blog.updateOne({ _id: req.params.id }, { comments: commentsOfBlog });
 
-
     res.status(201).send({
       error: false,
     });
   },
   update: async (req, res) => {
-    const data = await Comment.updateOne({ _id: req.params.id }, req.body);
+    const comment = await Comment.findOne({ _id: req.params.id });
+    const post = comment?.post;
+
+    if (req.user._id === comment?.user) {
+      await Comment.updateOne({ _id: req.params.id }, req.body);
+
+      const commentsOfBlog = await Comment.find({ post });
+
+      await Blog.updateOne({ _id: post }, { comments: commentsOfBlog });
+    } else throw new Error("You can only update your own comment!");
+
     res.status(202).send({
       error: false,
-      data,
       new: await Comment.findOne({ _id: req.params.id }),
     });
   },
   delete: async (req, res) => {
-    const data = await Comment.deleteOne({ _id: req.params.id });
+    const comment = await Comment.findOne({ _id: req.params.id });
+    const post = comment?.post;
+    let data;
+
+    if (req.user._id === comment?.user || req.user.isAdmin) {
+      data = await Comment.deleteOne({ _id: req.params.id });
+
+      const commentsOfBlog = await Comment.find({ post });
+
+      await Blog.updateOne({ _id: post }, { comments: commentsOfBlog });
+    } else throw new Error("You can only delte your own comment!");
+
     res.status(data.deletedCount ? 204 : 404).send({
       error: !data.deletedCount,
-      data,
     });
   },
 };

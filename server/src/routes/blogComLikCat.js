@@ -10,37 +10,40 @@ const category = require("../controllers/category")
 const blog = require("../controllers/blog")
 const like = require("../controllers/like")
 const comment = require("../controllers/comment")
+const permissons = require('../middlewares/permissons')
 
 
 
 // category routes
 router.route("/categories")
-  .get(category.list).post(category.create);
+  .get(permissons.isLogin, category.list)
+  .post(permissons.isLogin, category.create);
 
 router
   .route("/categories/:id")
-  .get(category.read)
-  .put(category.update)
-  .patch(category.update)
-  .delete(category.delete);
+  .get(permissons.isLogin, category.read)
+  .put(permissons.isAdmin, category.update)
+  .patch(permissons.isAdmin, category.update)
+  .delete(permissons.isAdmin, category.delete);
 
 
 // comment routes
 router.route("/comments/:id")
-  .post(comment.create)
-  .put(comment.update)
-  .delete(comment.delete);
+  .post(permissons.isLogin, comment.create)
+  .put(permissons.isLogin, comment.update)
+  .delete(permissons.isLogin, comment.delete);
 
 // blog  routes
 router.route("/blogs")
-  .get(blog.list).post(blog.create);
+  .get(blog.list)
+  .post(permissons.isLogin, blog.create);
 
 router
   .route("/blogs/:id")
-  .get(blog.read)
-  .put(blog.update)
-  .patch(blog.update)
-  .delete(blog.delete);
+  .get(permissons.isLogin,blog.read)
+  .put(permissons.isLogin,blog.update)
+  .patch(permissons.isLogin,blog.update)
+  .delete(permissons.isLogin,blog.delete);
 
 // likes  routes
 router.route("/likes/:id").post(like.create)

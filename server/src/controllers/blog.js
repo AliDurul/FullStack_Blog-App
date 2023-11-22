@@ -5,6 +5,7 @@
 // Blog Controller:
 const Blog = require("../models/blog");
 const View = require("../models/view");
+const Comment = require("../models/comment");
 
 module.exports = {
   list: async (req, res) => {
@@ -114,7 +115,18 @@ app.get('/blogs/:id', async (req, res) => {
     });
   },
   delete: async (req, res) => {
-    const data = await Blog.deleteOne({ _id: req.params.id });
+    const blog = await Blog.findOne({ _id: req.params.id });
+
+    const author = blog?.author;
+    let data;
+    
+    if (req.user.username === blog?.author || req.user.isAdmin) {
+      data = await Blog.deleteOne({ _id: req.params.id });
+
+      await Comment.deleteMany({post: req.params.id })
+
+    } else throw new Error("You can only delte your own comment!");
+
     res.status(data.deletedCount ? 204 : 404).send({
       error: !data.deletedCount,
       data,

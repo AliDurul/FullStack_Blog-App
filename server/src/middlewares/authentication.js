@@ -8,7 +8,7 @@ module.exports = async (req,res,next) => {
 
     if(token){
         const tokenData = await Token.findOne({token}).populate('user_id')
-        req.user = tokenData.user_id
+        req.user = tokenData ?  tokenData.user_id : undefined
     }
 
     next()
