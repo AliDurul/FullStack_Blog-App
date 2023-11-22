@@ -18,8 +18,7 @@ module.exports = {
   },
 
   create: async (req, res) => {
-
-/* 
+    /* 
   const user = await User.create(req.body);
     
     const id = user._id
@@ -39,10 +38,13 @@ module.exports = {
     const { _id, ...userInfo } = user._doc;
 
     // register
-    const tokenData = await Token.create({user_id: _id,token: passwordEncrypt(_id + Date.now()),});
+    const tokenData = await Token.create({
+      user_id: _id,
+      token: passwordEncrypt(_id + Date.now()),
+    });
 
-    userInfo.id = _id
-    userInfo.token = tokenData.token
+    userInfo.id = _id;
+    userInfo.token = tokenData.token;
 
     res.status(201).send(userInfo);
   },
@@ -54,7 +56,9 @@ module.exports = {
     });
   },
   update: async (req, res) => {
-    const data = await User.updateOne({ _id: req.params.id }, req.body);
+    const data = await User.updateOne({ _id: req.params.id }, req.bodya, {
+      runValidators: true,
+    });
     res.status(202).send({
       error: false,
       data,

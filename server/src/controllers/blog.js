@@ -8,10 +8,22 @@ const View = require("../models/view");
 
 module.exports = {
   list: async (req, res) => {
-    const data = await res.getModelList(Blog);
+    // Token e28d9d724b22ca5315fbf526beed8dbfe2d08e0b13579a78daeeeb0a647387eb
+    // Token 8a1b43509e04272fef30afda87ab246fbbda3beb84f00679ec171ba69f4e204e
+
+    let filters = {};
+
+    filters = { status: "p" };
+
+    if (req?.query?.author && req.user.username === req?.query?.author)
+      filters = req.query;
+    if (req?.query?.author && !(req.user.username === req?.query?.author))
+      throw new Error("You can only see your own blog");
+
+    const data = await res.getModelList(Blog, filters);
     res.status(200).send({
       error: false,
-      details: await res.getModelListDetails(Blog),
+      details: await res.getModelListDetails(Blog, filters),
       data,
     });
   },
