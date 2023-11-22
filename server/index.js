@@ -23,6 +23,7 @@ app.all("/", (req, res) => {
 /* ------------------------------------------------------------------------- */
 // MIDDLEWARES:
 app.use(express.json());
+app.use(require('cors')())
 app.use(require("./src/middlewares/findSearchSortPage"));
 app.use(require('./src/middlewares/authentication'))
 /* ------------------------------------------------------------------------- */

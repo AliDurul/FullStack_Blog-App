@@ -46,7 +46,7 @@ router
   .delete(permissons.isLogin,blog.delete);
 
 // likes  routes
-router.route("/likes/:id").post(like.create)
+router.route("/likes/:id").post(permissons.isLogin, like.create)
  
  
  
