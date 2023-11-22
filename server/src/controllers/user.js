@@ -36,7 +36,7 @@ module.exports = {
 
     // register
     const tokenData = await Token.create({
-      user_id: _id,
+      user_id: user._id,
       token: passwordEncrypt(_id + Date.now()),
     });
 
