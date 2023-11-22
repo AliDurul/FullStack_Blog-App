@@ -37,13 +37,13 @@ module.exports = {
     // register
     const tokenData = await Token.create({
       user_id: user._id,
-      token: passwordEncrypt(_id + Date.now()),
+      token: passwordEncrypt(user._id + Date.now()),
     });
 
    
     user.token = tokenData.token;
     user.id = user._id
-
+    console.log(user);
     res.status(201).send(user);
   },
   read: async (req, res) => {
@@ -54,7 +54,7 @@ module.exports = {
     });
   },
   update: async (req, res) => {
-    const data = await User.updateOne({ _id: req.params.id }, req.bodya, {
+    const data = await User.updateOne({ _id: req.params.id }, req.body, {
       runValidators: true,
     });
     res.status(202).send({
