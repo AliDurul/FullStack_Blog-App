@@ -11,6 +11,7 @@ module.exports = {
     
     req.body.user_id = req.user._id;
     req.body.post_id = req.params.id;
+    
 
     let likes = await Like.findOne({
       user_id: req.user._id,
@@ -21,6 +22,7 @@ module.exports = {
     else await Like.create({ user_id: req.user._id, post_id: req.params.id });
 
     const likesOfpost = await Like.find({ post_id: req.params.id });
+    
 
     await Blog.updateOne({ _id: req.params.id }, { likes_n: likesOfpost });
 

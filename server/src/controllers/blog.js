@@ -10,8 +10,6 @@ const Like = require("../models/like");
 
 module.exports = {
   list: async (req, res) => {
-    // Token e28d9d724b22ca5315fbf526beed8dbfe2d08e0b13579a78daeeeb0a647387eb
-    // Token 8a1b43509e04272fef30afda87ab246fbbda3beb84f00679ec171ba69f4e204e
 
     let filters = {};
 
@@ -23,13 +21,12 @@ module.exports = {
       throw new Error("You can only see your own blog");
 
     const data = await res.getModelList(Blog, filters);
-    res.status(200).send({
-      error: false,
-      details: await res.getModelListDetails(Blog, filters),
-      data,
-    });
+
+    res.status(200).send( data);
   },
+  
   create: async (req, res) => {
+
     req.body.author = req.user.username;
 
     const data = await Blog.create(req.body);
@@ -102,10 +99,8 @@ app.get('/blogs/:id', async (req, res) => {
     );
 
     const data = await Blog.findOne({ _id: req.params.id });
-    res.status(200).send({
-      error: false,
-      data,
-    });
+
+    res.status(200).send(data);
   },
   update: async (req, res) => {
     const data = await Blog.updateOne({ _id: req.params.id }, req.body);

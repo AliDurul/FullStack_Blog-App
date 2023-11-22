@@ -47,7 +47,7 @@ export default function DetailBlog() {
     const isAuthor = blogDetail?.author === userInfo?.username
 
     // check isLiked
-    let isLiked = blogDetail?.likes_n?.some(like => like.user_id === userInfo?.id)
+    let isLiked = blogDetail?.likes_n?.some(like => like.user_id === userInfo?._id)
 
     return (
         <>
@@ -63,7 +63,7 @@ export default function DetailBlog() {
                                 </Avatar>
                             }
                             title={<span style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>{blogDetail?.author}</span>}
-                            subheader={new Date(blogDetail?.publish_date).toLocaleString('us-US')}
+                            subheader={new Date(blogDetail?.createdAt).toLocaleString('us-US')}
                         />
 
                         <Box sx={{ p: 2, mb: 4 }}>
@@ -138,11 +138,11 @@ export default function DetailBlog() {
                 isCliked &&
                 <Box sx={{ display: 'flex', flexDirection: 'column', width: "50%", mb: 5, gap: 4, p: 10, pt: 5 }}>
 
-                    <BlogComment id={blogDetail.id} />
+                    <BlogComment id={blogDetail._id} />
 
                     {
                         orderedComment.reverse().map(comment =>
-                            <Box key={comment.id} sx={{ width: "300px", borderBottom: "1px solid black", p: 2, display: 'flex', flexDirection: 'column', gap: 3 }}>
+                            <Box key={comment._id} sx={{ width: "300px", borderBottom: "1px solid black", p: 2, display: 'flex', flexDirection: 'column', gap: 3 }}>
                                 <Typography variant="body1" color="initial">{comment.user}</Typography>
                                 <Typography variant="body2" color="initial">{comment.time_stamp}</Typography>
                                 <Typography variant="body1" color="initial">{comment.content}</Typography>

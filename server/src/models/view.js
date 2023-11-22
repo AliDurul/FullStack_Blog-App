@@ -24,5 +24,9 @@ const ViewSchema = new Schema({
 
 }, { collection: 'views', timestamps: true })
 
+ViewSchema.pre('init', function (data) {
+    data.id = data._id
+  })
+
 /* ------------------------------------------------------- */
 module.exports = model('View', ViewSchema)

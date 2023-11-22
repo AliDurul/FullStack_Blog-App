@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 const PrivateRouter = () => {
 
 
-  const { token, modalOpen } = useSelector(state => state.auth)
+  const { token} = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 

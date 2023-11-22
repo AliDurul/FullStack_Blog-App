@@ -20,7 +20,7 @@ const MyBlogs = () => {
 
 
   useEffect(() => {
-    getUserBlog('userBlogs', userInfo.id)
+    getUserBlog('userBlogs', userInfo.username)
   }, [])
 
 
@@ -37,11 +37,11 @@ const MyBlogs = () => {
 
             {
               userBlogs.map(blog => {
-                const { title, content, image, publish_date, author, likes, post_views, comment_count, likes_n } = blog
-                let isliked = likes_n.some(like => like.user_id === userInfo?.id)
+                const { title, content, image, createdAt, author, likes, post_views, comment_count, likes_n } = blog
+                let isliked = likes_n.some(like => like.user_id === userInfo?._id)
 
                 return (
-                  <Grid item key={blog.id}>
+                  <Grid item key={blog._id}>
                     <Card sx={{ maxWidth: 400, height: 500, boxShadow: 10, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 2 }}>
                       <CardHeader
                         avatar={
@@ -50,7 +50,7 @@ const MyBlogs = () => {
                           </Avatar>
                         }
                         title={<span style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>{author}</span>}
-                        subheader={publish_date}
+                        subheader={createdAt}
                       />
                       <CardMedia
                         component="img"
@@ -91,7 +91,7 @@ const MyBlogs = () => {
 
                         <Box>
                           <Button
-                            onClick={() => navigate(`/detail/${blog.id}`)}
+                            onClick={() => navigate(`/detail/${blog._id}`)}
                             variant="text"
                             color="primary"
                           > Read More</Button>

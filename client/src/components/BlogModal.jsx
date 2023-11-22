@@ -44,7 +44,7 @@ export default function BlogModal({ open, setOpen, blogDetail, isUpdate }) {
                         {
                             isUpdate
                                 ? <BlogForm formValues={blogDetail}  handleClose={handleClose}/>
-                                : <BlogDel id={blogDetail.id}  handleClose={handleClose}/>
+                                : <BlogDel id={blogDetail._id}  handleClose={handleClose}/>
                                 
                         }
 

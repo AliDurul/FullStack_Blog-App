@@ -16,7 +16,7 @@ const permissons = require('../middlewares/permissons')
 
 // category routes
 router.route("/categories")
-  .get(permissons.isLogin, category.list)
+  .get(category.list)
   .post(permissons.isAdmin, category.create);
 
 router

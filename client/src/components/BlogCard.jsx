@@ -23,13 +23,14 @@ export default function BlogCard({ blog }) {
     const navigate = useNavigate()
     const { createLike } = useBlogCall()
 
-    const { id, title, content, image, publish_date, author, likes, post_views, comment_count, category_name, likes_n } = blog
+    const { _id, title, content, image, createdAt, author, likes, post_views, comment_count, category_name, likes_n } = blog
 
     // check isLiked
     const { userInfo } = useSelector(state => state.auth)
-    let isLiked = likes_n.some(like => like.user_id === userInfo?.id)
-
-    const date = new Date(publish_date).toDateString()
+    let isLiked = likes_n.some(like => like.user_id === userInfo?._id)
+    
+    console.log(isLiked);
+    const date = new Date(createdAt).toDateString()
 
 
 
@@ -38,14 +39,14 @@ export default function BlogCard({ blog }) {
             <Box sx={{ flex: '3 0 0' }} >
                 <CardHeader 
                     avatar={
-                        <Avatar onClick={() => navigate(`detail/${id}`)} sx={{ bgcolor: red[500], cursor:'pointer' }} aria-label="recipe">
+                        <Avatar onClick={() => navigate(`detail/${_id}`)} sx={{ bgcolor: red[500], cursor:'pointer' }} aria-label="recipe">
                             A
                         </Avatar>
                     }
-                    title={<span onClick={() => navigate(`detail/${id}`)} style={{ fontWeight: 'bold', textTransform: 'uppercase' , cursor:'pointer'}}>{author}</span>}
+                    title={<span onClick={() => navigate(`detail/${_id}`)} style={{ fontWeight: 'bold', textTransform: 'uppercase' , cursor:'pointer'}}>{author}</span>}
                     subheader={date}
                 />
-                <CardContent sx={{ paddingTop: 0, cursor:'pointer' }} onClick={() => navigate(`detail/${id}`)}>
+                <CardContent sx={{ paddingTop: 0, cursor:'pointer' }} onClick={() => navigate(`detail/${_id}`)}>
                     <Typography variant="h5" color="initial" >{title.slice(0, 50)}</Typography>
 
                     <Typography variant="body2"  color="text.secondary" mb={1} sx={{
@@ -60,7 +61,7 @@ export default function BlogCard({ blog }) {
 
                 <CardActions disableSpacing sx={{ justifyContent: "space-between", flexDirection: { xs: 'column', md: 'row' } }}>
                     <Box>
-                        <IconButton aria-label="add to favorites" onClick={() => createLike(id)} >
+                        <IconButton aria-label="add to favorites" onClick={() => createLike(_id)} >
                             <Badge badgeContent={likes} color="info">
                                 <FavoriteIcon sx={{ color: isLiked ? "red" : "gray" }} />
                             </Badge>
@@ -83,7 +84,7 @@ export default function BlogCard({ blog }) {
 
             </Box>
 
-            <Stack justifyContent={'center'} alignItems={'center'} margin={'auto'} sx={{ flex: '1 0 0', cursor: 'pointer' }} onClick={() => navigate(`detail/${id}`)} >
+            <Stack justifyContent={'center'} alignItems={'center'} margin={'auto'} sx={{ flex: '1 0 0', cursor: 'pointer' }} onClick={() => navigate(`detail/${_id}`)} >
                 <img style={{ objectFit: "contain", height: '80%', width: '80%' }} src={image} alt={title} />
             </Stack>
 

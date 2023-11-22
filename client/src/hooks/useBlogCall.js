@@ -113,10 +113,11 @@ const useBlogCall = () => {
     }
   };
 
-  const getUserBlog = async (url, userId) => {
+  const getUserBlog = async (url, userName) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosWithToken(`api/blogs/?author=${userId}`);
+      const { data } = await axiosWithToken(`api/blogs/?author=${userName}`);
+      console.log(data);
       dispatch(getBloDetLikSuccess({ url, data }));
     } catch (error) {
       dispatch(fetchFail());

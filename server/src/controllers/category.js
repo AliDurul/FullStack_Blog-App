@@ -8,11 +8,8 @@ module.exports = {
     list: async (req, res) => {
 
         const data = await res.getModelList(Category)
-        res.status(200).send({
-            error: false,
-            details: await res.getModelListDetails(Category),
-            data
-        })
+
+        res.status(200).send(data)
     },
     create: async (req, res) => {
 

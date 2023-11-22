@@ -30,5 +30,9 @@ const CommentSchema = new Schema(
     { collection: "comments", timestamps: true }
 );
 
+CommentSchema.pre('init', function (data) {
+    data.id = data._id
+  })
+
 /* ------------------------------------------------------- */
 module.exports = model("Comment", CommentSchema);

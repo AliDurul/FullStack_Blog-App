@@ -96,5 +96,9 @@ BlogSchema.pre("save", async function (next) {
   next();
 });
 
+BlogSchema.pre('init', function (data) {
+  data.id = data._id
+})
+
 /* ------------------------------------------------------- */
 module.exports = model("Blog", BlogSchema);

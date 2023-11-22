@@ -20,5 +20,10 @@ const CategorySchema = new Schema({
 
 }, { collection: 'categories', timestamps: true })
 
+CategorySchema.pre('init', function (data) {
+    data.id = data._id
+})
+
+
 /* ------------------------------------------------------- */
 module.exports = model('Category', CategorySchema)

@@ -22,8 +22,8 @@ const BlogForm = ({formValues , handleClose}) => {
             initialValues={formValues}
             onSubmit={(values, action) => {
 
-                if("id" in formValues){
-                  updateBlog(values, values.id)
+                if("_id" in formValues){
+                  updateBlog(values, values._id)
                   handleClose()
                 }else{
                   createBlog(values)
@@ -49,7 +49,7 @@ const BlogForm = ({formValues , handleClose}) => {
                           onChange={handleChange}
                         >
                           {
-                            categories.map(category =><MenuItem  key={category.id} value={category.id}>{category.name}</MenuItem> )
+                            categories.map(category =><MenuItem  key={category._id} value={category._id}>{category.name}</MenuItem> )
                           }
                         </Select>
                       </FormControl>
