@@ -6,6 +6,7 @@
 const Blog = require("../models/blog");
 const View = require("../models/view");
 const Comment = require("../models/comment");
+const Like = require("../models/like");
 
 module.exports = {
   list: async (req, res) => {
@@ -124,6 +125,8 @@ app.get('/blogs/:id', async (req, res) => {
       data = await Blog.deleteOne({ _id: req.params.id });
 
       await Comment.deleteMany({post: req.params.id })
+      await Like.deleteMany({post_id: req.params.id })
+      await View.deleteMany({post_id: req.params.id })
 
     } else throw new Error("You can only delte your own comment!");
 

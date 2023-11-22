@@ -8,6 +8,7 @@ const Blog = require("../models/blog");
 
 module.exports = {
   create: async (req, res) => {
+    
     req.body.user_id = req.user._id;
     req.body.post_id = req.params.id;
 
