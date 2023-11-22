@@ -144,7 +144,7 @@ export default function DetailBlog() {
                         orderedComment.reverse().map(comment =>
                             <Box key={comment._id} sx={{ width: "300px", borderBottom: "1px solid black", p: 2, display: 'flex', flexDirection: 'column', gap: 3 }}>
                                 <Typography variant="body1" color="initial">{comment.user}</Typography>
-                                <Typography variant="body2" color="initial">{comment.time_stamp}</Typography>
+                                <Typography variant="body2" color="initial">{new Date(comment.createdAt).toLocaleString('us-US')}</Typography>
                                 <Typography variant="body1" color="initial">{comment.content}</Typography>
                             </Box>)
                     }

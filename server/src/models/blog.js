@@ -85,20 +85,42 @@ const BlogSchema = new Schema(
   { collection: "blogs", timestamps: true }
 );
 
-BlogSchema.pre("save", async function (next) {
+/* BlogSchema.pre(["save", "updateOne"], async function (next) {
+
+  const data = this?._update || this
+
   // category alanına bağlı kategori bilgisini al
-  const category = await Category.findOne(this.category);
+
+  const category = await Category.findOne({_id: data.category});
 
   // category_name'i belirle
-  this.category_name = category ? category.name : "Default Category";
+  this.category_name =  category.name
 
-  // sonraki adıma geç
+
+  this._update = data
+  next();
+}); */
+
+BlogSchema.pre(["save", "findOneAndUpdate"], async function (next) {
+  const data = this._update || this;
+
+  // category alanına bağlı kategori bilgisini al
+  const category = await Category.findOne({ _id: data.category });
+
+  // category_name'i belirle
+  this.category_name = category.name;
+
+  // updateOne için _update değil, findOneAndUpdate için _updateOne kullan
+  if (this.op === "findOneAndUpdate") {
+    this._updateOne.category_name = category.name;
+  }
+
   next();
 });
 
-BlogSchema.pre('init', function (data) {
-  data.id = data._id
-})
+BlogSchema.pre("init", function (data) {
+  data.id = data._id;
+});
 
 /* ------------------------------------------------------- */
 module.exports = model("Blog", BlogSchema);

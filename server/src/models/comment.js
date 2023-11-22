@@ -9,30 +9,30 @@ const { Schema, model } = require("mongoose");
 // Comment Model:
 
 const CommentSchema = new Schema(
-    {
-        user: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-            required: true,
-        },
-        content: {
-            type: String,
-            trim: true,
-            required: true,
-        },
-
-        post: {
-            type: Schema.Types.ObjectId,
-            ref: "Blog",
-            required: true,
-        }
+  {
+    user: {
+      type: String,
+      trim: true,
+      required: true,
     },
-    { collection: "comments", timestamps: true }
+    content: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+
+    post: {
+      type: Schema.Types.ObjectId,
+      ref: "Blog",
+      required: true,
+    },
+  },
+  { collection: "comments", timestamps: true }
 );
 
-CommentSchema.pre('init', function (data) {
-    data.id = data._id
-  })
+CommentSchema.pre("init", function (data) {
+  data.id = data._id;
+});
 
 /* ------------------------------------------------------- */
 module.exports = model("Comment", CommentSchema);

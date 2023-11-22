@@ -8,7 +8,7 @@ const Blog = require("../models/blog");
 
 module.exports = {
   create: async (req, res) => {
-    req.body.user = req.user._id;
+    req.body.user = req.user.username;
     req.body.post = req.params.id;
 
     await Comment.create(req.body);
@@ -25,7 +25,7 @@ module.exports = {
     const comment = await Comment.findOne({ _id: req.params.id });
     const post = comment?.post;
 
-    if (req.user._id === comment?.user) {
+    if (req.user.username === comment?.user) {
       await Comment.updateOne({ _id: req.params.id }, req.body);
 
       const commentsOfBlog = await Comment.find({ post });
@@ -43,7 +43,7 @@ module.exports = {
     const post = comment?.post;
     let data;
 
-    if (req.user._id === comment?.user || req.user.isAdmin) {
+    if (req.user.username === comment?.user || req.user.isAdmin) {
       data = await Comment.deleteOne({ _id: req.params.id });
 
       const commentsOfBlog = await Comment.find({ post });
