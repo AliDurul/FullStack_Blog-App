@@ -34,4 +34,4 @@ app.use(require("./src/routes"));
 app.use(require("./src/middlewares/errorHandler"));
 /* ------------------------------------------------------------------------- */
 // DEVELOPER SIDE PORT SYSTEM
-app.listen(PORT, HOST, () => console.log(`Running on http://${HOST}:${PORT}`));
+app.listen(PORT, () => console.log(`Running on http://${HOST}:${PORT}`));
