@@ -18,44 +18,19 @@ module.exports = {
   },
 
   create: async (req, res) => {
+
     const user = await User.create(req.body);
+    
 
     // register
-    const tokenData = await Token.create({
-      user_id: user._id,
-      token: passwordEncrypt(user._id + Date.now()),
-    });
+    const tokenData = await Token.create({user_id: user._id,token: passwordEncrypt(user._id + Date.now())});
 
-    user.token = tokenData.token;
-    user.id = user._id
-    console.log(user);
-    
-console.log(user);
+
+    user._doc.id = user._id;
+    user._doc.token = tokenData.token;
+
     res.status(201).send(user);
   },
-
-
-
-/*   create: async (req, res) => {
-
-    const user = await User.create(req.body);
-
-    // rest operoter
-    const { _id, ...userInfo } = user._doc;
-
-    // register
-    const tokenData = await Token.create({
-      user_id: _id,
-      token: passwordEncrypt(_id + Date.now()),
-    });
-
-    userInfo.id = _id;
-    userInfo.token = tokenData.token;
-
-console.log(userInfo);
-
-    res.status(201).send(userInfo);
-  }, */
 
   read: async (req, res) => {
     const data = await User.findOne({ _id: req.params.id });
