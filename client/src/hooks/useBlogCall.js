@@ -117,7 +117,6 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       const { data } = await axiosWithToken(`api/blogs/?author=${userName}`);
-      console.log(data);
       dispatch(getBloDetLikSuccess({ url, data }));
     } catch (error) {
       dispatch(fetchFail());

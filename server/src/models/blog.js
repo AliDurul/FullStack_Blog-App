@@ -50,10 +50,6 @@ const BlogSchema = new Schema(
       enum: ["p", "d"],
       default: "d",
     },
-    category_name: {
-      type: String,
-      trim: true,
-    },
     post_views: {
       type: Number,
       default: 0,
@@ -85,20 +81,10 @@ const BlogSchema = new Schema(
   { collection: "blogs", timestamps: true }
 );
 
-BlogSchema.pre(["save", "updateOne"], async function (next) {
 
-  const data = this?._update || this
 
-  // category alanına bağlı kategori bilgisini al
 
-  const category = await Category.findOne({_id: data.category});
-  // category_name'i belirle
-  data.category_name = category.name
 
-  this.category_name = data.category_name
-  this._update = data
-  next();
-});
 
 
 BlogSchema.pre("init", function (data) {
