@@ -1,15 +1,11 @@
 /* eslint-disable react/prop-types */
 import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
-import { Badge, Box, Button, CardMedia, Chip, Stack } from '@mui/material';
+import { Badge, Box, Button, CardMedia, Chip, Container } from '@mui/material';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -18,8 +14,10 @@ import BlogModal from '../components/BlogModal';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import useBlogCall from '../hooks/useBlogCall';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import BlogComment from '../components/BlogComment';
-
 
 
 export default function DetailBlog() {
@@ -31,13 +29,12 @@ export default function DetailBlog() {
 
 
     const [isUpdate, setIsUpdate] = useState(null)
-    const [isCliked, setIsCliked] = useState(false)
     const [open, setOpen] = useState(false);
 
     // modal toggle
     const handleOpen = () => setOpen(true);
 
-    const orderedComment = blogDetail?.comments ?  [...blogDetail.comments] : []
+    const orderedComment = blogDetail?.comments ? [...blogDetail.comments] : []
 
     useEffect(() => {
         getBlogById('blogDetail', id)
@@ -48,108 +45,92 @@ export default function DetailBlog() {
     // check isLiked
     let isLiked = blogDetail?.likes_n?.some(like => like.user_id === userInfo?._id)
 
+    // drawer
+    const [state, setState] = useState(false);
+    const toggleDrawer = (open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+
+        setState(open);
+    };
+
     return (
-        <>
-            <Box sx={{ display: 'flex', p: 10, pb: 0, flexDirection: { xs: 'column', md: "row" } }} >
-                <CardContent sx={{ display: 'flex', flexGrow: 1, justifyContent: "space-between", flexDirection: "column" }} >
-                    <Box>
-                        <CardHeader
-                            sx={{ mb: 5, p: 0 }}
-                            avatar={
-                                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={blogDetail?.author_info?.image}/>
-                            }
-                            title={<span style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>{blogDetail?.author_info?.username}</span>}
-                            subheader={new Date(blogDetail?.createdAt).toLocaleString('us-US')}
-                        />
+        <Container maxWidth='md' sx={{ color: '#6B6B6B', mb: 3 }}>
 
-                        <Box sx={{ p: 2, mb: 4 }}>
-                            <Typography variant="h4" color="initial">{blogDetail?.title}</Typography>
-                            <Typography variant="body1" color="text.secondary" mb={3}>{blogDetail?.content}</Typography>
+            <Box mt={5}>
+                <Typography sx={{fontSize:{xs:'1.3rem' , md:'1.6rem', lg:'2.3rem'}}} fontWeight={700} color="initial">{blogDetail?.title}</Typography>
+            </Box>
 
+            <CardHeader
+                sx={{ mb: 5, mt: 3, p: 0 }}
+                avatar={
+                    <Avatar aria-label="recipe" src={blogDetail?.author_info?.image} />
+                }
+                title={<span style={{ fontWeight: 600, textTransform: 'capitalize' }}>{blogDetail?.author_info?.username}</span>}
+                subheader={new Date(blogDetail?.createdAt).toLocaleString('us-US')}
+            />
 
-                            <Chip variant="outlined" color="primary" size="small" label={"# " + blogDetail?.category?.name} />
-
-                        </Box>
+            <Box borderRadius={20} borderBottom={'1px solid #0909091e'} borderTop={'1px solid #0909091e'} mx={'auto'} display={'flex'} justifyContent={'space-around'} mb={5} p={2}>
+                <IconButton aria-label="like it" onClick={() => createLike(id)} >
+                    <Badge badgeContent={blogDetail?.likes} color="secondary">
+                        <FavoriteIcon sx={{ color: isLiked ? "#c81212c6" : "gray" }} />
+                    </Badge>
+                </IconButton>
+                <IconButton aria-label="views">
+                    <Badge badgeContent={blogDetail?.post_views} color="secondary" >
+                        <VisibilityOutlinedIcon />
+                    </Badge>
+                </IconButton>
+                <IconButton aria-label="comment" onClick={toggleDrawer(true)}>
+                    <Badge badgeContent={blogDetail?.comment_count} color="secondary">
+                        <RateReviewOutlinedIcon />
+                    </Badge>
+                </IconButton>
+                <IconButton aria-label="save it" >
+                    <BookmarkBorderIcon />
+                </IconButton>
+                {
+                    isAuthor && <Box display={'flex'}  sx={{gap:{xs:1, md:2, lg:4}}}>
+                        <IconButton aria-label="edit" onClick={() => { handleOpen(), setIsUpdate(true) }} >
+                            <EditNoteIcon />
+                        </IconButton>
+                        <IconButton aria-label="delete" onClick={() => { handleOpen(), setIsUpdate(false) }} >
+                            <DeleteOutlineIcon />
+                        </IconButton>
                     </Box>
+                }
 
-
-                    <CardActions disableSpacing sx={{ justifyContent: "space-between" }}>
-                        <Box>
-                            <IconButton aria-label="add to favorites" onClick={() => createLike(id)} >
-                                <Badge badgeContent={blogDetail?.likes} color="info">
-                                    <FavoriteIcon sx={{ color: isLiked ? "red" : "gray" }} />
-                                </Badge>
-                            </IconButton>
-                            <IconButton aria-label="view">
-                                <Badge badgeContent={blogDetail?.post_views} color="info" >
-                                    <VisibilityOutlinedIcon />
-                                </Badge>
-                            </IconButton>
-                            <IconButton aria-label="view" onClick={() => setIsCliked(!isCliked)}>
-                                <Badge badgeContent={blogDetail?.comment_count} color="info">
-                                    <RateReviewOutlinedIcon />
-                                </Badge>
-                            </IconButton>
-                            <IconButton aria-label="share">
-                                <ShareIcon />
-                            </IconButton>
-                        </Box>
-
-                        <Box sx={{ display: 'flex', gap: 1, flexDirection: { xs: 'column', md: "row" } }}>
-
-
-
-                            {
-                                isAuthor &&
-                                <Stack spacing={2} direction={{ md: 'column', lg: 'row' }} useFlexGap flexWrap="wrap">
-                                    <Button variant="contained" color="success" onClick={() => { handleOpen(), setIsUpdate(true) }}>
-                                        Update
-                                    </Button>
-                                    <Button variant="outlined" color="error" onClick={() => { handleOpen(), setIsUpdate(false) }}>
-                                        Delete
-                                    </Button>
-                                </Stack>
-                            }
-
-
-                            <Button
-                                onClick={() => navigate("/")}
-                                variant="contained"
-                                color="primary"
-                            > Explore More</Button>
-                        </Box>
-                    </CardActions>
-                </CardContent>
-                <CardMedia
-                    component="img"
-                    image={blogDetail?.image}
-                    alt={blogDetail?.title}
-                    sx={{ objectFit: "contain", width: '100%', maxWidth: '700px', height: "auto", flexGrow: 1 }}
-                />
 
             </Box>
 
 
-            {
-                isCliked &&
-                <Box sx={{ display: 'flex', flexDirection: 'column', width: "50%", mb: 5, gap: 4, p: 10, pt: 5 }}>
+            <CardMedia
+                component="img"
+                image={blogDetail?.image}
+                alt={blogDetail?.title}
+                sx={{ objectFit: "contain", width: '100%', mb: 4 }}
+            />
 
-                    <BlogComment id={blogDetail._id} />
+            <Chip size="small" sx={{ backgroundColor: '#F2F2F2', mt: { xs: 3, md: 0 } }} label={"# " + blogDetail?.category?.name} />
 
-                    {
-                        orderedComment.reverse().map(comment =>
-                            <Box key={comment._id} sx={{ width: "300px", borderBottom: "1px solid black", p: 2, display: 'flex', flexDirection: 'column', gap: 3 }}>
-                                <Typography variant="body1" color="initial">{comment.user}</Typography>
-                                <Typography variant="body2" color="initial">{new Date(comment.createdAt).toLocaleString('us-US')}</Typography>
-                                <Typography variant="body1" color="initial">{comment.content}</Typography>
-                            </Box>)
-                    }
-                </Box>
-            }
+            <Typography mb={2} variant="body1" color="textSecondary" lineHeight={2} textAlign={'justify'} >{blogDetail?.content}</Typography>
 
+
+            <Button
+                onClick={() => navigate("/")}
+                variant="outlined"
+                color="primary"
+                sx={{ borderRadius: 5 }}
+            > Explore More</Button>
+
+
+            <BlogComment state={state} toggleDrawer={toggleDrawer} />
+
+                    {/* <BlogComment id={blogDetail._id} /> */}
 
             <BlogModal open={open} setOpen={setOpen} blogDetail={blogDetail} isUpdate={isUpdate} />
-        </>
+        </Container>
 
     );
 }
