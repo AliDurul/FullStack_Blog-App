@@ -13,10 +13,13 @@ const Header = () => {
             <Container maxWidth={'xl'}>
                 <Grid container rowSpacing={2} pb={3}>
                     <Grid item mt={10} md={6} >
-                        <Typography pb={3} sx={{ fontSize: { xs: '3rem', md: '3rem', lg: '5rem' }, lineHeight: 1 }} color="initial">Stay curious.</Typography>
-                        <Typography pb={3} variant="h5" color="initial">Discover stories, thinking, <br /> <span>and expertise from writers on any topic.</span></Typography>
+                        <Typography pb={3} sx={{ fontSize: { xs: '3rem', md: '3rem', lg: '5.5rem' }, lineHeight: 1 }} color="initial">Stay curious.</Typography>
+                        <Typography pb={3} variant="h4" color="initial">Discover stories, thinking, <br /> <span>and expertise from writers on any topic.</span></Typography>
                         {
-                            !token && <Button onClick={() => dispatch(modal(true))} sx={{ color: 'black' }} variant="outlined">Start Reading</Button>
+                            !token && <Button onClick={() => dispatch(modal(true))} color="primary" variant="outlined"
+                                sx={{ borderRadius: 5, }}
+                            >Start Reading</Button>
+
                         }
                     </Grid>
                     <Grid item md={6} sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', maxHeight: '400px', paddingLeft: 20 }}>

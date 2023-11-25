@@ -26,7 +26,7 @@ const style = {
     border: '1px solid #000',
     boxShadow: 24,
     overflowY: 'hidden',
-    borderRadius: 10,
+    borderRadius: 3,
     transition: 'all 1 ease', // Geçiş efekti ekle
 };
 const secondCardStyle = {
@@ -34,26 +34,28 @@ const secondCardStyle = {
     height: '100%', // Kartın yüksekliğini modalin yüksekliğine eşitle
 };
 
-export const registerSchema = object({
-    username: string()
-        .max(20, "Kullanici adi 10 karakterden az olmalidir.")
-        .required("username zorunludur"),
-    email: string().email().required("Email zorunludur"),
-    bio: string()
-        .max(250, "Bio 250 karakterden az olmalidir.")
-        .required("bio zorunludur"),
-    password: string()
-        .required("password zorunludur")
-        .min(8, "password en az 8 karakter olmalidir")
-        .max(20, "password en fazla 20 karakter olmalidir")
-        .matches(/\d+/, "Password bir sayi içermelidir")
-        .matches(/[a-z]/, "Password bir küçük harf içermelidir")
-        .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
-        .matches(/[!,?{}><%&$#£+-.]+/, "Password bir özel karakter içermelidir"),
-});
+
 
 // eslint-disable-next-line react/prop-types
 export default function LoginModal() {
+    
+    const registerSchema = object({
+        username: string()
+            .max(20, "Kullanici adi 10 karakterden az olmalidir.")
+            .required("username zorunludur"),
+        email: string().email().required("Email zorunludur"),
+        bio: string()
+            .max(250, "Bio 250 karakterden az olmalidir.")
+            .required("bio zorunludur"),
+        password: string()
+            .required("password zorunludur")
+            .min(8, "password en az 8 karakter olmalidir")
+            .max(20, "password en fazla 20 karakter olmalidir")
+            .matches(/\d+/, "Password bir sayi içermelidir")
+            .matches(/[a-z]/, "Password bir küçük harf içermelidir")
+            .matches(/[A-Z]/, "Password bir büyük harf içermelidir")
+            .matches(/[!,?{}><%&$#£+-.]+/, "Password bir özel karakter içermelidir"),
+    });
 
     const { login, register } = useAuthCall()
     const dispacth = useDispatch();
@@ -95,7 +97,6 @@ export default function LoginModal() {
                                 <CloseIcon sx={{ position: 'absolute', top: { xs: 0, md: -65 }, right: { xs: 0, md: -60 }, cursor: 'pointer' }} onClick={() => dispacth(modal(false))} />
 
                                 <Typography variant="h5" color="initial" textAlign={'center'} mb={3}>Join Us</Typography>
-                                <Typography variant="h5" color="initial" textAlign={'center'} mb={3}>ali@drl26.com</Typography>
 
                                 <Formik
                                     initialValues={{ email: "", password: "" }}
@@ -144,7 +145,8 @@ export default function LoginModal() {
                                                     </FormControl>
 
                                                     <Button variant='contained' sx={{
-                                                        backgroundColor: 'black', borderRadius: 5, px: 4, py: 2, '&:hover': {
+                                                        mx: { xs: 10, md: 17 },
+                                                        backgroundColor: 'black', borderRadius: 8, px: { xs: 1, md: 4 }, py: { xs: 1, md: '.7rem' }, '&:hover': {
                                                             backgroundColor: '#272727',
                                                         },
                                                     }} color="primary" type="submit">

@@ -43,7 +43,11 @@ const BlogSchema = new Schema(
     },
     author: {
       type: String,
+      trim: true,
       required: true,
+    },
+    author_info:{
+      type:Object,
     },
     status: {
       type: String,
@@ -80,11 +84,6 @@ const BlogSchema = new Schema(
   },
   { collection: "blogs", timestamps: true }
 );
-
-
-
-
-
 
 
 BlogSchema.pre("init", function (data) {

@@ -42,7 +42,7 @@ const AppRouter = () => {
 
       <LoginModal open={open} />
 
-      <Footer />
+      {/* <Footer /> */}
 
     </div>
   )

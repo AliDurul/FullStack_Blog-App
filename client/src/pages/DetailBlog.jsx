@@ -56,12 +56,9 @@ export default function DetailBlog() {
                         <CardHeader
                             sx={{ mb: 5, p: 0 }}
                             avatar={
-                                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                    {blogDetail?.author ? blogDetail?.author.slice(0, 1).toUpperCase() : 'A'}
-
-                                </Avatar>
+                                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={blogDetail?.author_info?.image}/>
                             }
-                            title={<span style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>{blogDetail?.author}</span>}
+                            title={<span style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>{blogDetail?.author_info?.username}</span>}
                             subheader={new Date(blogDetail?.createdAt).toLocaleString('us-US')}
                         />
 

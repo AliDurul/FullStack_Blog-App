@@ -79,30 +79,13 @@ function Navbar() {
             <Toolbar disableGutters >
 
               <Box sx={{ display: { xs: 'none', md: 'flex' }, }} flexDirection={'column'} mr={2} mt={0}>
-                <Box width={'100px'} m={0} p={0} sx={{cursor:'pointer'}} onClick={()=>navigate('/')} >
-                  <CardMedia
-                    component="img"
-                    height="70"
-                    image={logo}
-                    alt={'logo'}
-                    sx={{ objectFit: "cover" }}
-                  />
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    sx={{
-                      pt: 0,
-                      display: { xs: 'none', md: 'flex' },
-                      fontFamily: 'monospace',
-                      letterSpacing: '.1rem',
-                      textDecoration: 'none',
-                      color: "black",
-                      fontWeight: 'bolder'
-                    }}
-                  >  
-                      TEAMWORK
-                  </Typography>
-                </Box>
+                <CardMedia
+                  sx={{ cursor: 'pointer' }} onClick={() => navigate('/')}
+                  component="img"
+                  height="90"
+                  image={logo}
+                  alt={'logo'}
+                />
 
               </Box>
 
@@ -169,7 +152,8 @@ function Navbar() {
                           <BadgeAvatars image={userInfo?.image} />
                         </IconButton>)
 
-                        : <Typography onClick={() => dispacth(modal(true))} px={2} py={1} sx={{ cursor: 'pointer', backgroundColor: 'black', borderRadius: 3 }} variant="body1" color="white">Get Started</Typography>
+                        : <Button onClick={() => dispacth(modal(true))} variant='contained' sx={{  opacity:0.9 , borderRadius: 5, "&:hover":{  opacity:1 }}}
+                         >Get Started</Button>
                     }
 
                   </Tooltip>
@@ -204,7 +188,7 @@ function Navbar() {
         </Container>
 
       </AppBar>
-      <Box sx={{height:{ xs: '30px', md: '120px' }}}/>
+      <Box sx={{ height: { xs: '30px', md: '108px' } }} />
     </>
   );
 }

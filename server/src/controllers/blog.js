@@ -19,13 +19,14 @@ module.exports = {
     if (req?.query?.author && !(req.user.username === req?.query?.author))
       throw new Error("You can only see your own blog");
 
-    const data = await res.getModelList(Blog, filters, 'category');
+    const data = await res.getModelList(Blog, filters, "category");
 
     res.status(200).send(data);
   },
 
   create: async (req, res) => {
     req.body.author = req.user.username;
+    req.body.author_info = req.user;
 
     const data = await Blog.create(req.body);
     res.status(201).send({
@@ -52,7 +53,9 @@ module.exports = {
       { viewedBy: [...viewedBySet] }
     );
 
-    const data = await Blog.findOne({ _id: req.params.id }).populate('category');
+    const data = await Blog.findOne({ _id: req.params.id }).populate(
+      "category"
+    );
     res.status(200).send(data);
   },
   update: async (req, res) => {
