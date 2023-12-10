@@ -49,12 +49,17 @@ The goal was to construct a blog post management system using Node.js and Expres
 
 <div id="user-content-toc">
   <ul align="left">
-    <summary><h2>How does my project look</h2></summary>
+    <summary><h2>How does my project look and Relational database management system</h2></summary>
   </ul>
 </div>
 
-
 [Live Link]()
+
+
+![blog app](https://github.com/AliDurul/MernStack_Blog-App/assets/80897590/a439c8f6-cf4e-4c19-bbd5-9c06b29788e2)
+
+
+
 
 
 <div id="user-content-toc">
@@ -72,71 +77,52 @@ Thank you for visiting my project. I hope you have a wonderful experience explor
 ## Project Skeleton
 
 ```
-Movie App (folder)
+Blog App (folder)
 |
-|----readme.md    
-├── public
-│     └── _redirects
-|     └── favicon.png
-├── src
-|     ├── app
-|     |      ├── store.jsz
-|     ├──assets
-|     |      ├── favicon.png
-|     |      ├── loading.gif
-|     |      ├── no-result-found.avif
-|     |      ├── result.svg
-|     ├── components
-|     |      ├── BrandCard.jsx
-|     |      └── Charts.jsx
-|     |      └── FirmCard.jsx
-|     |      └── KpiCard.jsx
-|     |      └── MenuListItem.jsx
-|     |      └── ProductTable.jsx
-|     |      └── PurchaseTable.jsx
-|     |      └── RegisterForm.jsx
-|     |      └── SaleTable.jsx
-|     ├── features
-|     |      └── authSlice.js
-|     |      └── stockSlice.js
-|     ├── helper
-|     |      └── ToastNotify.js
-|     ├── hooks
-|     |      └── useAuthApiCall.js
-|     |      └── useAxios.js
-|     |      └── useStockCall.js
-|     ├── modals
-|     |      └── BrandsModal.jsx  
-|     |      └── FirmModal.jsx
-|     |      └── ProductModal.jsx
-|     |      └── PurchaseModal.jsx
-|     |      └── SaleModal.jsx
-|     ├── pages
-|     |      └── Brands.jsx
-|     |      └── Dashboard.jsx
-|     |      └── Firms.jsx
-|     |      └── Home.jsx
-|     |      └── Login.jsx
-|     |      └── Products.jsx
-|     |      └── Purchases.jsx
-|     |      └── Register.jsx
-|     |      └── Sales.jsx
-|     ├── router
-|     |      └── AppRouter.jsx
-|     |      └── PrivateRouter.jsx
-|     ├── styles
-|     |      └── globalStyles.js
+|---- README.md
+|
+├── client
+|     ├── public
+|     ├── src
+|     |      ├── app
+|     |      ├── components
+|     |      ├── features
+|     |      ├── helper
+|     |      ├── hooks
+|     |      ├── img
+|     |      ├── pages
+|     |      ├── router
+|     |      ├── styles
+|     |      ├── App.jsx
+|     |      ├── index.css
+|     |      └── main.jsx
 |     |
-│     ├── App.js
-│     ├── main.jsx
-│     └── index.css
-├── package.json
-├── .env
-|── .gitignore
-|── index.html
-|── package.json
-|── pnpm-lock.yaml
-|── tailwind.config.js
-|── vite.config.js
-└── yarn.lock
+|     ├── .env_example
+|     ├── .eslintrc.cjs
+|     ├── .gitignore
+|     ├── index.html
+|     ├── package.json
+|     ├── pnpm-lock.yaml
+|     ├── vercel.json
+|     └── vite.config.js
+|
+├── server
+|     ├── src
+|     |      ├── configs
+|     |      ├── controllers
+|     |      ├── helpers
+|     |      ├── middlewares
+|     |      ├── models
+|     |      └── routes
+|     |
+|     ├── .gitignore
+|     ├── blog app.png
+|     ├── index.js
+|     ├── package-lock.json
+|     ├── package.json
+|     ├── readme.md
+|     ├── vercel.json
+|     └── yarn.lock
+|
+└── README.md
 ```
