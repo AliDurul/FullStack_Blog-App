@@ -1,6 +1,6 @@
 <div id="user-content-toc">
   <ul align="left">
-    <summary><h1 style="display: inline-block">Mern Stack Stock App</h1></summary>
+    <summary><h1 style="display: inline-block">Mern Stack Blog App</h1></summary>
   </ul>
 </div>
 
