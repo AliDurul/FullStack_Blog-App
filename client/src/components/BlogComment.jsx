@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import CommentCard from './CommentCard';
 // import useBlogCall from '../hooks/useBlogCall';
 
 
@@ -40,8 +41,7 @@ export default function BlogComment({ toggleDrawer, state, id }) {
         <Box sx={{ width: { xs: 350, md: 550 }, p: 2 }}>
 
           <form action="#" onSubmit={formSubmit}>
-
-            <Box sx={{ boxShadow: 4, borderRadius: 4, p: 1 }}>
+            <Box sx={{ boxShadow: 4, borderRadius: 4, p: 1, mb:3 }}>
               <CardHeader
                 sx={{ p: 1 }}
                 avatar={
@@ -55,24 +55,26 @@ export default function BlogComment({ toggleDrawer, state, id }) {
                 name="comment"
                 id="comment"
                 placeholder='Your Comment...'
-                style={{ border: 'none', outline: 'none', padding: '10px', resize: 'none', width: '100%', height: '100px', fontSize: '1.3rem', fontStyle: "italic", overflow: 'auto' }}
+                style={{ border: 'none', outline: 'none', padding: '10px', resize: 'none', width: '100%', height: '100px', fontSize: '1.1rem', fontStyle: "italic", overflow: 'auto' }}
 
               />
               <Stack >
                 <Button disabled={!comment?.content} type='submit' sx={{ alignSelf: 'flex-end', borderRadius: 5 }} color='commentBtn' variant="outlined">Send</Button>
               </Stack>
-
-
             </Box>
-
-
-
-
-
-
-
           </form>
 
+
+          <Stack
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            spacing={2}
+          >
+            
+            <CommentCard/>
+            <CommentCard/>
+          </Stack>
 
 
 

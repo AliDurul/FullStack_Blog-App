@@ -10,11 +10,7 @@ const { Schema, model } = require("mongoose");
 
 const CommentSchema = new Schema(
   {
-    user: {
-      type: String,
-      trim: true,
-      required: true,
-    },
+    user: { },
     content: {
       type: String,
       trim: true,

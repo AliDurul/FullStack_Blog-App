@@ -35,6 +35,7 @@ export default function DetailBlog() {
     const handleOpen = () => setOpen(true);
 
     const orderedComment = blogDetail?.comments ? [...blogDetail.comments] : []
+    console.log(orderedComment);
 
     useEffect(() => {
         getBlogById('blogDetail', id)

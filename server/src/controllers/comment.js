@@ -8,15 +8,15 @@ const Blog = require("../models/blog");
 
 module.exports = {
   create: async (req, res) => {
-    req.body.user = req.user.username;
+  
+    req.body.user = {...req.user}
     req.body.post = req.params.id;
 
     await Comment.create(req.body);
 
-    const commentsOfBlog = await Comment.find({ post: req.params.id });
+    const commentsOfBlog = await Comment.find({ post: req.params.id })
 
-    await Blog.updateOne({ _id: req.params.id }, { comments: commentsOfBlog });
-
+   await Blog.updateOne({ _id: req.params.id }, { comments: commentsOfBlog });
     res.status(201).send({
       error: false,
     });

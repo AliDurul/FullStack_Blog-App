@@ -53,9 +53,7 @@ module.exports = {
       { viewedBy: [...viewedBySet] }
     );
 
-    const data = await Blog.findOne({ _id: req.params.id }).populate(
-      "category"
-    );
+    const data = await Blog.findOne({ _id: req.params.id }).populate("category");
     res.status(200).send(data);
   },
   update: async (req, res) => {
