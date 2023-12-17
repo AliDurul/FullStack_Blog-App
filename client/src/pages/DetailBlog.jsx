@@ -51,7 +51,6 @@ export default function DetailBlog() {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-
         setState(open);
     };
 
@@ -125,7 +124,7 @@ export default function DetailBlog() {
             > Explore More</Button>
 
 
-            <BlogComment state={state} toggleDrawer={toggleDrawer} />
+            <BlogComment state={state} toggleDrawer={toggleDrawer} id={blogDetail._id} />
 
                     {/* <BlogComment id={blogDetail._id} /> */}
 

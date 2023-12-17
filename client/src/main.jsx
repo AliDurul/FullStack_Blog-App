@@ -12,6 +12,9 @@ const theme = createTheme({
     },
     badgeClr: {
       main: '#ffc1189c'
+    },
+    commentBtn:{
+      main:'#58c7589c'
     }
 
   },
