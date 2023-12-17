@@ -34,8 +34,7 @@ export default function DetailBlog() {
     // modal toggle
     const handleOpen = () => setOpen(true);
 
-    const orderedComment = blogDetail?.comments ? [...blogDetail.comments] : []
-    console.log(orderedComment);
+    const CommentArr = blogDetail?.comments ? [...blogDetail.comments].reverse() : []
 
     useEffect(() => {
         getBlogById('blogDetail', id)
@@ -125,7 +124,7 @@ export default function DetailBlog() {
             > Explore More</Button>
 
 
-            <BlogComment state={state} toggleDrawer={toggleDrawer} id={blogDetail._id} />
+            <BlogComment state={state} toggleDrawer={toggleDrawer} id={blogDetail._id} CommentArr={CommentArr}/>
 
                     {/* <BlogComment id={blogDetail._id} /> */}
 

@@ -40,10 +40,10 @@ export default function BlogCard({ blog }) {
                     title={<span onClick={() => navigate(`detail/${_id}`)} style={{ fontWeight: 'bold', textTransform: 'capitalize', cursor: 'pointer' }}>{author_info?.first_name} {author_info?.last_name}</span>}
                     subheader={date}
                 />
-                <CardContent sx={{ paddingTop: 0, cursor: 'pointer' }} onClick={() => navigate(`detail/${_id}`)}>
-                    <Typography variant="h5" sx={{fontSize:{xs:'1rem', md:'2rem'}}} color="initial" >{title.slice(0, 50)}</Typography>
+                <CardContent sx={{ paddingTop: 0, cursor: 'pointer' }} >
+                    <Typography variant="h5" sx={{fontSize:{xs:'1rem', md:'2rem'}}} color="initial" onClick={() => navigate(`detail/${_id}`)}>{title.slice(0, 50)}</Typography>
 
-                    <Typography variant="body2" color="text.secondary" mb={1} sx={{
+                    <Typography onClick={() => navigate(`detail/${_id}`)} variant="body2" color="text.secondary" mb={1} sx={{
                         overflow: 'hidden',
                         whiteSpace: 'wrap',
                         display: { xs: 'none', md: 'flex' }

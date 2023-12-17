@@ -12,9 +12,7 @@ const auth = require("../controllers/auth");
 router.route("/")
   .get(user.list)
 
-router.route("/register").post(user.create);
-
-
+  router.route("/register").post(user.create);
 
 router
   .route("/:id")
@@ -22,6 +20,7 @@ router
   .put(user.update)
   .patch(user.update)
   .delete(user.delete);
+
 
 // auth routes
 router.route("/auth/login").post(auth.login);

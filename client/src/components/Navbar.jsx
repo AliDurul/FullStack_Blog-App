@@ -23,7 +23,6 @@ import { useNavigate } from 'react-router-dom';
 const pages = [
   { id: 1, title: 'DASHBORAD', url: '/' },
   { id: 2, title: 'NEW BLOG', url: '/newblog' },
-  { id: 3, title: 'ABOUT', url: '/about' }
 ];
 
 const LogedOutSettings = [{ id: 1, title: 'Login', url: 'login' }];

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 
 import { Avatar, Button, CardHeader, Stack } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -5,17 +6,17 @@ import Drawer from '@mui/material/Drawer';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import CommentCard from './CommentCard';
-// import useBlogCall from '../hooks/useBlogCall';
+import useBlogCall from '../hooks/useBlogCall';
 
 
 
 // eslint-disable-next-line react/prop-types
-export default function BlogComment({ toggleDrawer, state, id }) {
+export default function BlogComment({ toggleDrawer, state, id, CommentArr }) {
 
 
   // eslint-disable-next-line react/prop-types
   const { userInfo } = useSelector(state => state.auth)
-  // const { createComment } = useBlogCall()
+  const { createComment } = useBlogCall()
 
   const [comment, setComment] = useState({ post: id, content: "" })
 
@@ -26,10 +27,15 @@ export default function BlogComment({ toggleDrawer, state, id }) {
       return;
     }
 
-    console.log(comment);
-    // createComment(comment, id)
-  }
+    createComment(comment, id)
+    setComment({
+      post: id,
+      content: ""
+    })
 
+    e.target[0].value = ""
+
+  }
 
   return (
     <div>
@@ -41,7 +47,7 @@ export default function BlogComment({ toggleDrawer, state, id }) {
         <Box sx={{ width: { xs: 350, md: 550 }, p: 2 }}>
 
           <form action="#" onSubmit={formSubmit}>
-            <Box sx={{ boxShadow: 4, borderRadius: 4, p: 1, mb:3 }}>
+            <Box sx={{ boxShadow: 4, borderRadius: 4, p: 1, mb: 3, height: 'auto' }}>
               <CardHeader
                 sx={{ p: 1 }}
                 avatar={
@@ -52,10 +58,11 @@ export default function BlogComment({ toggleDrawer, state, id }) {
 
               <textarea
                 onChange={(e) => setComment({ ...comment, content: e.target.value.trim() })}
+
                 name="comment"
                 id="comment"
                 placeholder='Your Comment...'
-                style={{ border: 'none', outline: 'none', padding: '10px', resize: 'none', width: '100%', height: '100px', fontSize: '1.1rem', fontStyle: "italic", overflow: 'auto' }}
+                style={{ border: 'none', outline: 'none', padding: '10px', width: '100%', minHeight: '100px', fontSize: '1.1rem', fontStyle: "italic", resize: 'vertical' }}
 
               />
               <Stack >
@@ -71,9 +78,11 @@ export default function BlogComment({ toggleDrawer, state, id }) {
             alignItems="flex-start"
             spacing={2}
           >
-            
-            <CommentCard/>
-            <CommentCard/>
+
+            {
+              CommentArr.map(comment => <CommentCard key={comment._id} comment={comment} />)
+            }
+
           </Stack>
 
 

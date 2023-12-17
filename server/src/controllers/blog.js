@@ -14,11 +14,16 @@ module.exports = {
 
     filters = { status: "p" };
 
-    if (req?.query?.author && req.user.username === req?.query?.author)
+    if (req?.query?.author && req.user.username === req?.query?.author) {
       filters = req.query;
-    if (req?.query?.author && !(req.user.username === req?.query?.author))
-      throw new Error("You can only see your own blog");
+      console.log("ilk query");
+    }
+    if (req?.query?.author && !(req.user.username === req?.query?.author)) {
+      console.log("ikinci query");
 
+      throw new Error("You can only see your own blog");
+    }
+console.log('iflere girmedi');
     const data = await res.getModelList(Blog, filters, "category");
 
     res.status(200).send(data);
@@ -53,7 +58,9 @@ module.exports = {
       { viewedBy: [...viewedBySet] }
     );
 
-    const data = await Blog.findOne({ _id: req.params.id }).populate("category");
+    const data = await Blog.findOne({ _id: req.params.id }).populate(
+      "category"
+    );
     res.status(200).send(data);
   },
   update: async (req, res) => {
