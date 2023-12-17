@@ -16,14 +16,11 @@ module.exports = {
 
     if (req?.query?.author && req.user.username === req?.query?.author) {
       filters = req.query;
-      console.log("ilk query");
     }
     if (req?.query?.author && !(req.user.username === req?.query?.author)) {
-      console.log("ikinci query");
 
       throw new Error("You can only see your own blog");
     }
-console.log('iflere girmedi');
     const data = await res.getModelList(Blog, filters, "category");
 
     res.status(200).send(data);
