@@ -53,8 +53,9 @@ The goal was to construct a blog post management system using Node.js and Expres
   </ul>
 </div>
 
-[Live Link]()
+[Live Link](https://mern-stack-blog-app-alidurul.vercel.app/)
 
+![blog app](https://github.com/AliDurul/MernStack_Blog-App/assets/80897590/1d78fdb1-5326-4237-b630-097889dbc09a)
 
 ![blog app](https://github.com/AliDurul/MernStack_Blog-App/assets/80897590/a439c8f6-cf4e-4c19-bbd5-9c06b29788e2)
 
