@@ -13,15 +13,14 @@ const theme = createTheme({
     badgeClr: {
       main: '#ffc1189c'
     },
-    commentBtn:{
-      main:'#58c7589c'
+    commentBtn: {
+      main: '#58c7589c'
     }
 
   },
   typography: {
     fontFamily: [
-      'Chilanka',
-      'cursive',
+      'Roboto', 'sans-serif'
     ].join(','),
   }
 });
