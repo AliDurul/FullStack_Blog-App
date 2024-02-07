@@ -18,16 +18,29 @@ module.exports = {
   },
 
   create: async (req, res) => {
+    const userExists = await User.findOne({
+      $or: [{ email: req.body.email }, { username: req.body.username }],
+    });
 
-    const user = await User.create(req.body);
-    
+    if (userExists) {
+      if (userExists.email === req.body.email) {
+        throw new Error("Email is already in used!");
+      } else if (userExists.username === req.body.username) {
+        throw new Error("Username is already in used!");
+      }
+    }
 
     // register
-    const tokenData = await Token.create({user_id: user._id,token: passwordEncrypt(user._id + Date.now())});
-
-
-    user._doc.id = user._id;
-    user._doc.token = tokenData.token;
+    let user;
+    if (!isExist && !isUsernameExist) {
+      user = await User.create(req.body);
+      const tokenData = await Token.create({
+        user_id: user._id,
+        token: passwordEncrypt(user._id + Date.now()),
+      });
+      user._doc.id = user._id;
+      user._doc.token = tokenData.token;
+    }
 
     res.status(201).send(user);
   },
@@ -40,11 +53,13 @@ module.exports = {
     });
   },
   update: async (req, res) => {
-   const data=  await User.updateOne({ _id: req.params.id }, req.body, {runValidators: true});
+    const data = await User.updateOne({ _id: req.params.id }, req.body, {
+      runValidators: true,
+    });
 
     res.status(202).send({
       error: false,
-      data
+      data,
     });
   },
   delete: async (req, res) => {
