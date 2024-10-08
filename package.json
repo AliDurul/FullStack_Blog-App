@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "debug": "DEBUG=* nodemon"
+    "debug": "DEBUG=* nodemon",
+    "setup-production":"pnpm install --prefix ./client --production=false && npm run build --prefix ./client && npm install"
   },
   "keywords": [],
   "author": "Ali Durul",

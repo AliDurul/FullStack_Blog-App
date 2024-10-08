@@ -6,12 +6,12 @@ const useAxios = () => {
     const { token } = useSelector((state) => state.auth);
 
     const axiosWithToken = axios.create({
-        baseURL: `${import.meta.env.VITE_BASE_URL}`,
+        baseURL: '/api/v1/',
         headers: { Authorization: `Token ${token}` },
       });
 
       const axiosPublic = axios.create({
-        baseURL: `${import.meta.env.VITE_BASE_URL}`,
+        baseURL: '/api/v1/',
       });
 
 

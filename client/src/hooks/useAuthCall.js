@@ -20,7 +20,7 @@ const useAuthCall = () => {
 
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}` + "users/auth/login/",
+        "/api/v1/users/auth/login/",
         userData
       );
       dispatch(loginSuccess(data));
@@ -38,7 +38,7 @@ const useAuthCall = () => {
 
     try {
       await axios.post(
-        `${import.meta.env.VITE_BASE_URL}` + "users/auth/logout/"
+        "/api/v1/users/auth/logout/"
       );
       dispatch(logoutSuccess());
       toastSuccessNotify("Logout Successed !");
@@ -53,7 +53,7 @@ const useAuthCall = () => {
     dispatch(fetchStart());
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}users/register/`,
+        "/api/v1/users/register/",
         userData
       );
       dispatch(registerSuccess(data));

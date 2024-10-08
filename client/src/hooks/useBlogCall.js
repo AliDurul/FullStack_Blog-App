@@ -22,7 +22,7 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       const { data } = await axios(
-        `${import.meta.env.VITE_BASE_URL}` + "api/blogs/"
+        "/api/v1/blogs/"
       );
       dispatch(getBloDetLikSuccess({ url, data }));
     } catch (error) {
@@ -35,7 +35,7 @@ const useBlogCall = () => {
   const getCategories = async (url) => {
     try {
       const { data } = await axios(
-        `${import.meta.env.VITE_BASE_URL}` + "api/categories/"
+        "/api/v1/categories/"
       );
       dispatch(getBloDetLikSuccess({ url, data }));
     } catch (error) {
@@ -47,7 +47,7 @@ const useBlogCall = () => {
 
     const axiosConfig = {
       method: "post",
-      url: `${import.meta.env.VITE_BASE_URL}` + "api/blogs/",
+      url: "/api/v1/blogs/",
       data: newBlog, // Data to be sent in the request body
       headers: { Authorization: `Token ${token}` },
     };
@@ -63,7 +63,7 @@ const useBlogCall = () => {
 
   const updateBlog = async (updatedBlog, id) => {
     try {
-      await axiosWithToken.put(`api/blogs/${id}/`, updatedBlog);
+      await axiosWithToken.put(`blogs/${id}/`, updatedBlog);
       getBlogById('blogDetail',id)
       toastSuccessNotify("Updated is Secuccessful !");
     } catch (error) {
@@ -75,7 +75,7 @@ const useBlogCall = () => {
   const getBlogById = async (url, id) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosWithToken(`api/blogs/${id}/`);
+      const { data } = await axiosWithToken(`blogs/${id}/`);
       dispatch(getBloDetLikSuccess({ url, data }));
     } catch (error) {
       dispatch(fetchFail());
@@ -85,7 +85,7 @@ const useBlogCall = () => {
 
   const deleteBlog = async (id) => {
     try {
-      await axiosWithToken.delete(`api/blogs/${id}/`);
+      await axiosWithToken.delete(`blogs/${id}/`);
       toastSuccessNotify("Blog is Deleted Secuccessfully !");
       navigate('/')
     } catch (error) {
@@ -96,7 +96,7 @@ const useBlogCall = () => {
 
   const createLike = async (id) => {
     try {
-      await axiosWithToken.post(`api/likes/${id}/`);
+      await axiosWithToken.post(`likes/${id}/`);
       getBlog('blogs');
       getBlogById('blogDetail',id)
     } catch (error) {
@@ -106,7 +106,7 @@ const useBlogCall = () => {
 
   const createComment = async (comment, id) => {
     try {
-      await axiosWithToken.post(`api/comments/${id}/`, comment);
+      await axiosWithToken.post(`comments/${id}/`, comment);
       getBlogById('blogDetail', id);
     } catch (error) {
       console.log(error);
@@ -116,7 +116,7 @@ const useBlogCall = () => {
   const getUserBlog = async (url, userName) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosWithToken(`api/blogs/?author=${userName}`);
+      const { data } = await axiosWithToken(`blogs/?author=${userName}`);
       dispatch(getBloDetLikSuccess({ url, data }));
     } catch (error) {
       dispatch(fetchFail());
