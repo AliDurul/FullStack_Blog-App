@@ -17,7 +17,7 @@ require("./src/configs/dbConnection")();
 
 // MIDDLEWARES:
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '/client/dist'))) // Static Files
+app.use(express.static(path.resolve(__dirname, 'client', 'dist'))) // Static Files
 app.use(require('cors')())
 app.use(require("./src/middlewares/findSearchSortPage"));
 app.use(require('./src/middlewares/authentication'))
@@ -37,7 +37,7 @@ app.all("/api/v1", (req, res) => {
 app.use('/api/v1', require("./src/routes"));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/dist/index.html'))  
+  res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
 })
 /* ------------------------------------------------------------------------- */
 // errorHandler:
